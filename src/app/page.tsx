@@ -64,6 +64,14 @@ const Page = () => {
       }
     }
 
+    addEventListener(
+      'wheel',
+      () => {
+        console.log('Wheel event')
+      },
+      { signal },
+    )
+
     addEventListener('wheel', scrollEventHandler, { signal })
     addEventListener('touchmove', scrollEventHandler, { signal })
     addEventListener('keydown', scrollEventHandler, { signal })
