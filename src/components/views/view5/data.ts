@@ -27,7 +27,7 @@ export const projects: Project[] = [
     title: 'My Portfolio Site',
     github: 'https://github.com/tech-mik/portfolio-site',
     description:
-      'A personal portfolio website showcasing my projects, skills, and experience. Built with Next.js, TypeScript, and Tailwind CSS, this site serves as a central hub for my professional online presence.',
+      'A personal portfolio website showcasing my projects, skills, and experience. Built with Next.js, TypeScript, and Tailwind CSS.',
     image: portfolioSite,
     type: 'Hobby Project',
     icons: [
@@ -42,7 +42,7 @@ export const projects: Project[] = [
     title: 'Next.js ACME Dashboard',
     github: 'https://github.com/tech-mik/portfolio-site',
     description:
-      'An official tutorial from Next.js, showcasing a comprehensive dashboard built with Next.js. This project demonstrates various features and best practices for building modern web applications using Next.js, TypeScript, and other modern web technologies.',
+      'An official tutorial from Next.js, showcasing a comprehensive dashboard built with Next.js.',
     image: nextjsAcme,
     type: 'Course Project',
     icons: [
