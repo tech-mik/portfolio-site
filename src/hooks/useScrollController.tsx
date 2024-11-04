@@ -29,6 +29,7 @@ const useScrollController = ({ refs }: useScrollControllerProps) => {
   const timer = useRef<NodeJS.Timeout | null>(null)
 
   const scrollDown = useCallback(() => {
+    if (currentView === undefined) return
     if (currentView < VIEWS_CONFIG.length - 1) {
       setIsTransitioning(true)
       setIsScrolling(true)
@@ -40,6 +41,7 @@ const useScrollController = ({ refs }: useScrollControllerProps) => {
   }, [currentView, setView, refs, setIsTransitioning, setIsScrolling])
 
   const scrollUp = useCallback(() => {
+    if (currentView === undefined) return
     if (currentView > 0) {
       setIsTransitioning(true)
       setIsScrolling(true)
