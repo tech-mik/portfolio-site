@@ -3,10 +3,11 @@
 import ScrollableImageSection from '@/components/scrollableSections/ScrollableImageSection'
 import { childViewProps } from '@/types/Views'
 import clsx from 'clsx'
-import { forwardRef } from 'react'
+import { Component, forwardRef } from 'react'
 
-import SyntaxHighlighter from 'react-syntax-highlighter'
+import Sntx, { SyntaxHighlighterProps } from 'react-syntax-highlighter'
 import { anOldHope as highlightTheme } from 'react-syntax-highlighter/dist/cjs/styles/hljs'
+const SyntaxHighlighter = Sntx as typeof Component<SyntaxHighlighterProps>
 
 import TypeOut from '@/components/TypeOut'
 import useInternalRef from '@/hooks/useInternalRef'

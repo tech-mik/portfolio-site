@@ -6,27 +6,19 @@ import {
 } from '@/components/ui/tooltip'
 import { IconWithTooltip } from '@/components/views/view5'
 import { Project } from '@/types/Views'
-import { HTMLMotionProps, motion, useInView } from 'framer-motion'
+import { HTMLMotionProps, motion, useInView, Variants } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
 import { SiGithub } from 'react-icons/si'
 
-const childVariant: HTMLMotionProps<'div'>['variants'] = {
-  hidden: {
-    opacity: 0,
-    y: 50,
-    x: 20,
-  },
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20, x: 10 },
   visible: {
     opacity: 1,
     y: 0,
     x: 0,
-    transition: {
-      type: 'spring',
-      damping: 10,
-      duration: 0.5,
-    },
+    transition: { type: 'spring', bounce: 1, damping: 8 },
   },
 }
 
@@ -36,14 +28,11 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const ref = useRef<HTMLDivElement>(null)
-  const isInViewOnce = useInView(ref, { once: true, amount: 0.8 })
 
   return (
     <motion.article
-      initial='hidden'
-      animate={isInViewOnce ? 'visible' : 'hidden'}
       whileHover={{ scale: 1.05 }}
-      variants={childVariant}
+      variants={itemVariants}
       className='flex flex-row border-gray-100 bg-white drop-shadow-xl border rounded-xl w-full h-[300px] overflow-hidden'
       ref={ref}>
       <div className='flex flex-col justify-between items-start p-10 w-3/5'>

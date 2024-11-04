@@ -19,8 +19,6 @@ const useSetView: useSetView = (ref, sectionIndex) => {
       setView(sectionIndex)
       if (ref.current.dataset.scrollLock === 'true' && !isLocked) {
         lock()
-        console.log('test')
-        console.log('lock')
       } else if (ref.current.dataset.scrollLock === 'false' && isLocked) {
         unlock()
       }

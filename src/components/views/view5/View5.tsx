@@ -3,57 +3,80 @@
 import { childViewProps } from '@/types/Views'
 import {
   motion,
+  px,
   useInView,
   useMotionValueEvent,
   useScroll,
   useTransform,
 } from 'framer-motion'
 import Image from 'next/image'
-import { forwardRef, useEffect, useRef } from 'react'
+import { forwardRef, use, useRef, useState } from 'react'
 
+import { useApp } from '@/context/AppContext'
+import useInternalRef from '@/hooks/useInternalRef'
+import useSetView from '@/hooks/useSetView'
 import ProjectCard from './ProjectCard'
 import { projects } from './data'
-import { useApp } from '@/context/AppContext'
-import useSetView from '@/hooks/useSetView'
-import useInternalRef from '@/hooks/useInternalRef'
 
 const View5 = forwardRef<HTMLDivElement, childViewProps>(function View5(
   { sectionIndex, scrollLock, anchor },
   ref,
 ) {
   const { internalRef } = useInternalRef(ref)
+  const [isInView, setIsInView] = useState(false)
+  const [isInViewOnce, setIsInViewOnce] = useState(false)
+
   useSetView(internalRef, sectionIndex)
-  const { currentView } = useApp()
 
-  // const { scrollYProgress } = useScroll({
-  //   target: internalRef,
-  //   offset: ['start end', 'start start'],
-  // })
+  const { isLocked, currentView } = useApp()
 
-  // const backgroundColor = useTransform(
-  //   scrollYProgress,
-  //   [0.2, 1],
-  //   ['#000000', '#fafafa'],
-  // )
+  const { scrollYProgress } = useScroll({
+    target: internalRef,
+    offset: ['start end', 'start start'],
+    layoutEffect: false,
+  })
 
-  const backgroundColor = '#FFFFFF'
+  useMotionValueEvent(scrollYProgress, 'change', (value: number) => {
+    if (value === 1 && currentView <= sectionIndex) {
+      setIsInView(true)
+      setIsInViewOnce(true)
+    } else {
+      setIsInView(false)
+    }
+  })
+
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0.4, 1],
+    ['#000000', '#fafafa'],
+  )
+
+  const opacity = useTransform(scrollYProgress, [0.4, 1], [0, 1])
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  }
 
   return (
     <motion.section
       id={anchor}
-      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white py-20 min-h-screen'
+      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white pt-20 pb-96 min-h-screen'
       initial={{ backgroundColor: '#FFFFFF' }}
       style={{
         backgroundColor,
       }}
-      transition={{ duration: 0.5 }}
       ref={ref}
       data-scroll-lock={scrollLock}>
       {/* DECORATION */}
       <div
         className={`${
-          currentView === sectionIndex ? 'fixed' : 'absolute'
-        } top-0 left-0 w-full h-screen `}>
+          isInView ? 'fixed' : 'absolute'
+        } top-0 left-0 h-screen w-full`}
+        style={{ opacity: opacity.get() }}>
         <Image
           src='/grid-bg-transparent.webp'
           fill
@@ -68,11 +91,11 @@ const View5 = forwardRef<HTMLDivElement, childViewProps>(function View5(
       </h2>
       <motion.div
         className='z-10 justify-center items-center gap-10 grid grid-cols-[1fr,1fr] w-full container'
-        transition={{ staggerChildren: 0.25 }}>
+        variants={containerVariants}
+        initial='hidden'
+        animate={isInViewOnce ? 'visible' : 'hidden'}>
         {projects.map((project, i) => (
-          <div key={i}>
-            <ProjectCard project={project} />
-          </div>
+          <ProjectCard project={project} key={project.title} />
         ))}
       </motion.div>
     </motion.section>
