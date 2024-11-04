@@ -8,6 +8,7 @@ import clsx from 'clsx'
 import { motion, useInView } from 'framer-motion'
 import { forwardRef } from 'react'
 import ScrollableText from '../ScrollableText'
+import { useApp } from '@/context/AppContext'
 
 const View2 = forwardRef<HTMLDivElement, childViewProps>(function View2(
   { sectionIndex, scrollLock, anchor },
@@ -16,8 +17,8 @@ const View2 = forwardRef<HTMLDivElement, childViewProps>(function View2(
   const { internalRef } = useInternalRef(ref)
   useSetView(internalRef, sectionIndex)
 
-  const isInViewImg = useInView(internalRef, { amount: 0.5 })
-  const isInViewText = useInView(internalRef, { amount: 0.9 })
+  const { currentView } = useApp()
+  const isInView = currentView === sectionIndex
 
   return (
     <section
@@ -27,20 +28,18 @@ const View2 = forwardRef<HTMLDivElement, childViewProps>(function View2(
       data-scroll-lock={scrollLock}>
       <ScrollableImage
         alt='Mik ten Holt'
-        isInView={isInViewImg}
+        isInView={isInView}
         src='/bg-mik-4.webp'>
         <ScrollableText
-          className={`${
-            isInViewText ? 'opacity-100' : 'opacity-0'
-          } lg:pl-[200px] xl:pl-[300px]`}
+          className={`${isInView ? 'opacity-100' : 'opacity-0'} lg:pl-[150px]`}
           side='right'
           elementType='h2'>
           <motion.span
             className='font-black font-dancingscript'
             initial={{ translateX: 30, opacity: 0 }}
             animate={{
-              translateX: isInViewText ? 0 : 30,
-              opacity: isInViewText ? 1 : 0,
+              translateX: isInView ? 0 : 30,
+              opacity: isInView ? 1 : 0,
             }}
             transition={{ duration: 1, type: 'spring', bounce: 0.6 }}>
             A
@@ -49,8 +48,8 @@ const View2 = forwardRef<HTMLDivElement, childViewProps>(function View2(
             className='font-arima font-bold text-white'
             initial={{ translateX: 30, opacity: 0 }}
             animate={{
-              translateX: isInViewText ? 0 : 30,
-              opacity: isInViewText ? 1 : 0,
+              translateX: isInView ? 0 : 30,
+              opacity: isInView ? 1 : 0,
             }}
             transition={{
               duration: 1,
@@ -66,8 +65,8 @@ const View2 = forwardRef<HTMLDivElement, childViewProps>(function View2(
             className='drop-shadow-lg shadow-white green-gradient-border font-londrinasolid text-wrap animated'
             initial={{ translateX: 30, opacity: 0 }}
             animate={{
-              translateX: isInViewText ? 0 : 30,
-              opacity: isInViewText ? 1 : 0,
+              translateX: isInView ? 0 : 30,
+              opacity: isInView ? 1 : 0,
             }}
             transition={{
               duration: 1,

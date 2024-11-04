@@ -2,7 +2,6 @@
 
 import ScrollableImage from '@/components/ScrollableImage'
 import { childViewProps } from '@/types/Views'
-import clsx from 'clsx'
 import { Component, forwardRef } from 'react'
 
 import Sntx, { SyntaxHighlighterProps } from 'react-syntax-highlighter'
@@ -15,6 +14,7 @@ import useSetView from '@/hooks/useSetView'
 import { removeIndentation } from '@/utils'
 import { motion, useInView } from 'framer-motion'
 import ScrollableText from '../ScrollableText'
+import { useApp } from '@/context/AppContext'
 
 const View3 = forwardRef<HTMLDivElement, childViewProps>(function View3(
   { sectionIndex, scrollLock, anchor },
@@ -23,8 +23,8 @@ const View3 = forwardRef<HTMLDivElement, childViewProps>(function View3(
   const { internalRef } = useInternalRef(ref)
   useSetView(internalRef, sectionIndex)
 
-  const isInViewImg = useInView(internalRef, { amount: 0.5 })
-  const isInViewText = useInView(internalRef, { amount: 0.9 })
+  const { currentView } = useApp()
+  const isInView = currentView === sectionIndex
 
   const codeString = removeIndentation(`
     let profession = 'Boring job';
@@ -44,21 +44,19 @@ const View3 = forwardRef<HTMLDivElement, childViewProps>(function View3(
       data-scroll-lock={scrollLock}>
       <ScrollableImage
         alt='Mik ten Holt'
-        isInView={isInViewImg}
+        isInView={isInView}
         src='/bg-mik-3.webp'>
         <ScrollableText
           elementType='div'
-          className={
-            isInViewText ? 'opacity-100 translate-y-px ' : 'opacity-0'
-          }>
+          className={isInView ? 'opacity-100 translate-y-px ' : 'opacity-0'}>
           <div className='flex flex-col items-center gap-5'>
             <motion.span
               className='green-gradient-border font-bold font-dancingscript animated'
               data-text='Ready to'
               initial={{ translateY: 30, opacity: 0 }}
               animate={{
-                translateY: isInViewText ? 0 : 30,
-                opacity: isInViewText ? 1 : 0,
+                translateY: isInView ? 0 : 30,
+                opacity: isInView ? 1 : 0,
               }}
               transition={{ duration: 1, type: 'spring', bounce: 0.6 }}>
               Ready to
@@ -67,9 +65,9 @@ const View3 = forwardRef<HTMLDivElement, childViewProps>(function View3(
               className='code-block flex flex-row gap-5 border-slate-900 bg-black drop-shadow-2xl p-5 border rounded-xl text-white text-xs lg:text-lg xl:text-xl'
               initial={{ translateY: 30, translateX: 10, opacity: 0 }}
               animate={{
-                translateY: isInViewText ? 0 : 30,
-                translateX: isInViewText ? 0 : 10,
-                opacity: isInViewText ? 1 : 0,
+                translateY: isInView ? 0 : 30,
+                translateX: isInView ? 0 : 10,
+                opacity: isInView ? 1 : 0,
               }}
               transition={{
                 duration: 1,
@@ -77,7 +75,7 @@ const View3 = forwardRef<HTMLDivElement, childViewProps>(function View3(
                 bounce: 0.6,
                 delay: 0.05,
               }}>
-              <TypeOut startTyping={isInViewText} typingSpeed={50}>
+              <TypeOut startTyping={isInView} typingSpeed={50}>
                 <SyntaxHighlighter
                   wrapLines
                   showLineNumbers

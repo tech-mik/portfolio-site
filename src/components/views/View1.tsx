@@ -9,6 +9,7 @@ import { motion, useInView } from 'framer-motion'
 import useInternalRef from '@/hooks/useInternalRef'
 import useSetView from '@/hooks/useSetView'
 import ScrollableText from '../ScrollableText'
+import { useApp } from '@/context/AppContext'
 
 const View1 = forwardRef<HTMLDivElement, childViewProps>(function View1(
   { sectionIndex, scrollLock, anchor },
@@ -17,8 +18,8 @@ const View1 = forwardRef<HTMLDivElement, childViewProps>(function View1(
   const { internalRef } = useInternalRef(ref)
   useSetView(internalRef, sectionIndex)
 
-  const isInViewImg = useInView(internalRef, { amount: 0.5 })
-  const isInViewText = useInView(internalRef, { amount: 0.9 })
+  const { currentView } = useApp()
+  const isInView = currentView === sectionIndex
 
   return (
     <section
@@ -28,21 +29,22 @@ const View1 = forwardRef<HTMLDivElement, childViewProps>(function View1(
       data-scroll-lock={scrollLock}>
       <ScrollableImage
         alt='Mik ten Holt'
-        isInView={isInViewImg}
+        isInView={isInView}
         src='/bg-mik-1.webp'>
         <ScrollableText
           elementType='h1'
-          className={isInViewText ? 'opacity-100' : 'opacity-0'}
+          className={isInView ? 'opacity-100' : 'opacity-0'}
           side='left'>
           <motion.span
             initial={{ translateX: -30 }}
             animate={{
-              translateX: isInViewText ? 0 : -30,
+              translateX: isInView ? 0 : -30,
             }}
             transition={{
-              duration: 1,
+              duration: 0.8,
               type: 'spring',
               bounce: 0.5,
+              delay: 0.15,
             }}
             className={clsx(
               'drop-shadow-lg shadow-white font-dancingscript text-white',
@@ -53,12 +55,13 @@ const View1 = forwardRef<HTMLDivElement, childViewProps>(function View1(
             className='font-black'
             initial={{ translateX: 30 }}
             animate={{
-              translateX: isInViewText ? 0 : 30,
+              translateX: isInView ? 0 : 30,
             }}
             transition={{
-              duration: 1,
+              duration: 0.8,
               type: 'spring',
               bounce: 0.5,
+              delay: 0.15,
             }}>
             <span
               className='green-gradient-border font-londrinasolid animated'

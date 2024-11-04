@@ -35,7 +35,7 @@ const View5 = forwardRef<HTMLDivElement, childViewProps>(function View5(
   })
 
   useMotionValueEvent(scrollYProgress, 'change', (value: number) => {
-    if (value >= 0.8 && currentView <= sectionIndex) {
+    if ((value >= 0.8 && currentView) || 0 <= sectionIndex) {
       setIsInView(true)
       setIsInViewOnce(true)
     } else {

@@ -13,7 +13,7 @@ interface AppContextType {
   lock: () => void
   unlock: () => void
   isLocked: boolean
-  currentView: number
+  currentView: number | undefined
   previousView: number | null
   setView: (view: number) => void
   log: string | null
@@ -38,7 +38,7 @@ export default function AppContextProvider({
 
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [isScrolling, setIsScrolling] = useState(false)
-  const [currentView, setCurrentView] = useState(0)
+  const [currentView, setCurrentView] = useState<number | undefined>(undefined)
   const [previousView, setPreviousView] = useState<number | null>(null)
   const [scrollingDirection, setScrollingDirection] = useState<
     'up' | 'down' | null
@@ -47,7 +47,7 @@ export default function AppContextProvider({
 
   function setView(view: number) {
     if (view !== currentView) {
-      setPreviousView(currentView)
+      setPreviousView(currentView || null)
       setCurrentView(view)
     }
   }
