@@ -12,6 +12,10 @@ import {
   SiDrizzle,
   SiReacthookform,
   SiResend,
+  SiSupabase,
+  SiTailwindcss,
+  SiJavascript,
+  SiStyledcomponents,
 } from 'react-icons/si'
 
 export const projects: Project[] = [
@@ -28,6 +32,7 @@ export const projects: Project[] = [
       { title: 'React', icon: SiReact },
       { title: 'React Query', icon: SiReactquery },
       { title: 'Shadcn UI', icon: SiShadcnui },
+      { title: 'Tailwind CSS', icon: SiTailwindcss },
       { title: 'Drizzle ORM', icon: SiDrizzle },
       { title: 'React Hook Form', icon: SiReacthookform },
       { title: 'Resend', icon: SiResend },
@@ -40,7 +45,13 @@ export const projects: Project[] = [
       'A website for a fictional resort in the middle of the jungle. A place to relax and enjoy the nature.',
     image: projectWildOasis,
     type: 'Course Project',
-    icons: [],
+    icons: [
+      { title: 'TypeScript', icon: SiTypescript },
+      { title: 'Next.js', icon: RiNextjsLine },
+      { title: 'React', icon: SiReact },
+      { title: 'Supabase', icon: SiSupabase },
+      { title: 'Tailwind CSS', icon: SiTailwindcss },
+    ],
   },
   {
     title: 'The Wild Oasis Dashboard',
@@ -49,6 +60,13 @@ export const projects: Project[] = [
       'A dashboard for the resort owners to manage the bookings and the resort.',
     image: projectWildOasisDashboard,
     type: 'Course Project',
-    icons: [],
+    icons: [
+      { title: 'JavaScript', icon: SiJavascript },
+      { title: 'React', icon: SiReact },
+      { title: 'React Query', icon: SiReactquery },
+      { title: 'Supabase', icon: SiSupabase },
+      { title: 'Tailwind CSS', icon: SiTailwindcss },
+      { title: 'Styled Components', icon: SiStyledcomponents },
+    ],
   },
 ]

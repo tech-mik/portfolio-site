@@ -33,9 +33,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     <motion.article
       whileHover={{ scale: 1.05 }}
       variants={itemVariants}
-      className='flex flex-row border-gray-100 bg-white drop-shadow-xl border rounded-xl w-full h-[300px] overflow-hidden'
+      className='flex flex-row border-gray-100 bg-white shadow-xl border rounded-xl w-full h-[300px] overflow-hidden'
       ref={ref}>
-      <div className='flex flex-col justify-between items-start p-10 w-3/5'>
+      <div className='flex flex-col justify-between items-start gap-5 p-5 sm:p-10 w-4/5 sm:w-3/5'>
         <div className='space-y-3'>
           <div className='justify-start items-center gap-2'>
             <div className='flex flex-row items-start gap-3'>
@@ -64,7 +64,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
           <p className='text-sm'>{project.description}</p>
         </div>
-        <div className='flex flex-row gap-2'>
+        <div className='flex flex-row flex-wrap gap-2'>
           <TooltipProvider delayDuration={100}>
             {project.icons.map((icon, i) => (
               <IconWithTooltip key={i} icon={icon} />
@@ -72,8 +72,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </TooltipProvider>
         </div>
       </div>
-      <div className='relative w-2/5 h-full'>
-        <div className='top-10 absolute flex flex-col drop-shadow-xl border rounded-lg w-[110%] h-full overflow-hidden'>
+      <div className='relative w-1/5 sm:w-2/5 h-full'>
+        <div className='top-10 absolute flex flex-col shadow-xl border rounded-lg w-[110%] h-full overflow-hidden'>
           <div className='flex flex-row justify-start items-center gap-1 border-gray-150 bg-gray-100 px-2 border-b h-6'>
             <div className='bg-red-500 rounded-full w-2 h-2'></div>
             <div className='bg-yellow-500 rounded-full w-2 h-2'></div>

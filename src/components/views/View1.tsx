@@ -1,6 +1,6 @@
 'use client'
 
-import ScrollableImageSection from '@/components/scrollableSections/ScrollableImageSection'
+import ScrollableImage from '@/components/ScrollableImage'
 import { childViewProps } from '@/types/Views'
 import clsx from 'clsx'
 import { forwardRef } from 'react'
@@ -8,6 +8,7 @@ import { forwardRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import useInternalRef from '@/hooks/useInternalRef'
 import useSetView from '@/hooks/useSetView'
+import ScrollableText from '../ScrollableText'
 
 const View1 = forwardRef<HTMLDivElement, childViewProps>(function View1(
   { sectionIndex, scrollLock, anchor },
@@ -25,15 +26,14 @@ const View1 = forwardRef<HTMLDivElement, childViewProps>(function View1(
       className='relative w-full h-[100vh]'
       ref={ref}
       data-scroll-lock={scrollLock}>
-      <ScrollableImageSection
+      <ScrollableImage
         alt='Mik ten Holt'
         isInView={isInViewImg}
         src='/bg-mik-1.webp'>
-        <motion.h1
-          className={clsx(
-            'top-0 left-0 z-10 fixed flex flex-col justify-center items-end space-y-2 pr-[200px] w-1/2 h-[100vh] font-light text-8xl text-left text-white transition-opacity duration-700 ease-in-out',
-            isInViewText ? 'opacity-100' : 'opacity-0',
-          )}>
+        <ScrollableText
+          elementType='h1'
+          className={isInViewText ? 'opacity-100' : 'opacity-0'}
+          side='left'>
           <motion.span
             initial={{ translateX: -30 }}
             animate={{
@@ -66,8 +66,8 @@ const View1 = forwardRef<HTMLDivElement, childViewProps>(function View1(
               Mik ten Holt
             </span>
           </motion.span>
-        </motion.h1>
-      </ScrollableImageSection>
+        </ScrollableText>
+      </ScrollableImage>
     </section>
   )
 })

@@ -1,8 +1,5 @@
-import useInternalRef from '@/hooks/useInternalRef'
-import useSetView from '@/hooks/useSetView'
 import clsx from 'clsx'
 import Image from 'next/image'
-import { forwardRef } from 'react'
 
 interface ImageSectionProps {
   src: string
@@ -21,7 +18,7 @@ const ImageSection = ({ src, alt, isInView, children }: ImageSectionProps) => {
         priority
         fill
         className={clsx(
-          'object-bottom z-10 !fixed !h-[100vh] transition-opacity duration-500 ease-in-out object-cover',
+          '!top-auto object-bottom z-10 !fixed !h-[100vh] max-lg:max-h-[70%] transition-opacity duration-500 ease-in-out object-cover',
           isInView ? 'opacity-100' : 'opacity-0',
         )}
       />

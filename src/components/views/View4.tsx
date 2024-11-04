@@ -1,12 +1,13 @@
 'use client'
 
-import ScrollableImageSection from '@/components/scrollableSections/ScrollableImageSection'
+import ScrollableImage from '@/components/ScrollableImage'
 import useInternalRef from '@/hooks/useInternalRef'
 import useSetView from '@/hooks/useSetView'
 import { childViewProps } from '@/types/Views'
 import clsx from 'clsx'
 import { motion, useInView } from 'framer-motion'
 import { forwardRef } from 'react'
+import ScrollableText from '../ScrollableText'
 
 const View4 = forwardRef<HTMLDivElement, childViewProps>(function View4(
   { sectionIndex, scrollLock, anchor },
@@ -24,15 +25,14 @@ const View4 = forwardRef<HTMLDivElement, childViewProps>(function View4(
       className='relative w-full h-[100vh]'
       ref={ref}
       data-scroll-lock={scrollLock}>
-      <ScrollableImageSection
+      <ScrollableImage
         alt='Mik ten Holt'
         isInView={isInViewImg}
         src='/bg-mik-2.webp'>
-        <div
-          className={clsx(
-            'top-0 right-0 z-10 fixed flex flex-col justify-center items-start pr-[50px] pl-[250px] w-1/2 h-[100vh] font-light text-8xl text-left text-white transition-all duration-700 ease-in-out',
-            isInViewText ? 'opacity-100 translate-x-px ' : 'opacity-0',
-          )}>
+        <ScrollableText
+          elementType='div'
+          className={isInViewText ? 'opacity-100 translate-x-px ' : 'opacity-0'}
+          side='right'>
           <motion.span
             initial={{ translateX: 30, opacity: 0 }}
             animate={{
@@ -71,11 +71,11 @@ const View4 = forwardRef<HTMLDivElement, childViewProps>(function View4(
               bounce: 0.6,
               delay: isInViewText ? 1 : 0,
             }}
-            className='drop-shadow-lg shadow-white pb-3 green-gradient-border font-londrinasolid text-8xl text-white,'>
+            className='drop-shadow-lg shadow-white pb-3 green-gradient-border font-londrinasolid text-white,'>
             together
           </motion.span>
-        </div>
-      </ScrollableImageSection>
+        </ScrollableText>
+      </ScrollableImage>
     </section>
   )
 })
