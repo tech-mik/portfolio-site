@@ -12,7 +12,7 @@ import { forwardRef, useState } from 'react'
 
 import { useApp } from '@/context/AppContext'
 import useInternalRef from '@/hooks/useInternalRef'
-import useSetView from '@/hooks/useSetView'
+import useSetVisibleSection from '@/hooks/useSetVisibleSection'
 import ProjectCard from './ProjectCard'
 import { projects } from './data'
 
@@ -24,9 +24,9 @@ const View5 = forwardRef<HTMLDivElement, childViewProps>(function View5(
   const [isInView, setIsInView] = useState(false)
   const [isInViewOnce, setIsInViewOnce] = useState(false)
 
-  useSetView(internalRef, sectionIndex)
+  useSetVisibleSection(internalRef, sectionIndex)
 
-  const { currentView } = useApp()
+  const { visibleSection } = useApp()
 
   const { scrollYProgress } = useScroll({
     target: internalRef,
@@ -35,7 +35,7 @@ const View5 = forwardRef<HTMLDivElement, childViewProps>(function View5(
   })
 
   useMotionValueEvent(scrollYProgress, 'change', (value: number) => {
-    if ((value >= 0.8 && currentView) || 0 <= sectionIndex) {
+    if ((value >= 0.8 && visibleSection) || 0 <= sectionIndex) {
       setIsInView(true)
       setIsInViewOnce(true)
     } else {
@@ -62,28 +62,17 @@ const View5 = forwardRef<HTMLDivElement, childViewProps>(function View5(
   return (
     <motion.section
       id={anchor}
-      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white pt-20 pb-20 xl:pb-60 min-h-screen'
+      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white pt-20 pb-20 xl:pb-60 h-screen overflow-y-scroll'
       initial={{ backgroundColor: '#FFFFFF' }}
       style={{
         backgroundColor,
+        backgroundImage: `url('/grid-bg-transparent.webp')`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
       }}
       ref={ref}
+      data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>
-      {/* DECORATION */}
-      <div
-        className={`${
-          isInView ? 'fixed' : 'absolute'
-        } top-0 left-0 h-screen w-full`}
-        style={{ opacity: opacity.get() }}>
-        <Image
-          src='/grid-bg-transparent.webp'
-          fill
-          className={`top-0 left-0 z-[-1] opacity-70 object-cover`}
-          alt='background-grid-transparent'
-        />
-      </div>
-      {/* END DECORATION */}
-
       <h2 className='font-arima font-black text-4xl text-black lg:text-6xl'>
         Some of my projects
       </h2>

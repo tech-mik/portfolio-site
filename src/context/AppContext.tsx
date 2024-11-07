@@ -1,23 +1,28 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
-import { useScrollLock } from 'usehooks-ts'
+import { VIEWS_CONFIG } from '@/config/viewsConfig'
+import { ViewHTMLDivElement } from '@/types/Views'
+import {
+  createContext,
+  createRef,
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useContext,
+  useRef,
+  useState,
+} from 'react'
 
 interface AppContextType {
-  isTransitioning: boolean
-  setIsTransitioning: (isTransitioning: boolean) => void
+  refs: RefObject<RefObject<ViewHTMLDivElement | null>[]>
+  visibleSection: HTMLDivElement | null
+  setVisibleSection: Dispatch<SetStateAction<HTMLDivElement | null>>
   isScrolling: boolean
-  setIsScrolling: (isTransitioning: boolean) => void
-  scrollingDirection: 'up' | 'down' | null
-  setScrollingDirection: (direction: 'up' | 'down' | null) => void
-  lock: () => void
-  unlock: () => void
-  isLocked: boolean
-  currentView: number | undefined
-  previousView: number | null
-  setView: (view: number) => void
-  log: string | null
-  setLog: (log: string) => void
+  setIsScrolling: Dispatch<SetStateAction<boolean>>
+  isTransitioning: boolean
+  setIsTransitioning: Dispatch<SetStateAction<boolean>>
+  log: string
+  setLog: Dispatch<SetStateAction<string>>
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined)
@@ -27,58 +32,25 @@ export default function AppContextProvider({
 }: {
   children: React.ReactNode
 }) {
-  const {
-    lock: lockScroll,
-    unlock: unlockScroll,
-    isLocked,
-  } = useScrollLock({
-    autoLock: false,
-    widthReflow: true,
-  })
+  const refs = useRef(VIEWS_CONFIG.map(() => createRef<ViewHTMLDivElement>()))
 
-  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [visibleSection, setVisibleSection] = useState<HTMLDivElement | null>(
+    null,
+  )
   const [isScrolling, setIsScrolling] = useState(false)
-  const [currentView, setCurrentView] = useState<number | undefined>(undefined)
-  const [previousView, setPreviousView] = useState<number | null>(null)
-  const [scrollingDirection, setScrollingDirection] = useState<
-    'up' | 'down' | null
-  >(null)
-  const [log, setLog] = useState<string | null>(null)
-
-  function setView(view: number) {
-    if (view !== currentView) {
-      setPreviousView(currentView || null)
-      setCurrentView(view)
-    }
-  }
-
-  function lock() {
-    if (document.body.style.overflow !== 'hidden') {
-      lockScroll()
-    }
-  }
-
-  function unlock() {
-    if (document.body.style.overflow === 'hidden') {
-      unlockScroll()
-    }
-  }
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [log, setLog] = useState('')
 
   return (
     <AppContext.Provider
       value={{
-        isTransitioning,
-        setIsTransitioning,
+        refs,
+        visibleSection,
+        setVisibleSection,
         isScrolling,
         setIsScrolling,
-        scrollingDirection,
-        setScrollingDirection,
-        lock,
-        unlock,
-        isLocked,
-        currentView,
-        setView,
-        previousView,
+        isTransitioning,
+        setIsTransitioning,
         log,
         setLog,
       }}>

@@ -7,7 +7,7 @@ import { forwardRef } from 'react'
 
 import { motion, useInView } from 'framer-motion'
 import useInternalRef from '@/hooks/useInternalRef'
-import useSetView from '@/hooks/useSetView'
+import useSetVisibleSection from '@/hooks/useSetVisibleSection'
 import ScrollableText from '../ScrollableText'
 import { useApp } from '@/context/AppContext'
 
@@ -16,16 +16,17 @@ const View1 = forwardRef<HTMLDivElement, childViewProps>(function View1(
   ref,
 ) {
   const { internalRef } = useInternalRef(ref)
-  useSetView(internalRef, sectionIndex)
+  useSetVisibleSection(internalRef, sectionIndex)
 
-  const { currentView } = useApp()
-  const isInView = currentView === sectionIndex
+  const { visibleSection } = useApp()
+  const isInView = Number(visibleSection?.dataset.sectionId) === sectionIndex
 
   return (
     <section
       id={anchor}
       className='relative w-full h-[100vh]'
       ref={ref}
+      data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>
       <ScrollableImage
         alt='Mik ten Holt'

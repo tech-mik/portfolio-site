@@ -1,25 +1,24 @@
 'use client'
 
 import { VIEWS_CONFIG } from '@/config/viewsConfig'
+import { useApp } from '@/context/AppContext'
 import useScrollController from '@/hooks/useScrollController'
-import { createRef, useMemo, useRef } from 'react'
 
 const Page = () => {
-  const views = useMemo(() => VIEWS_CONFIG, [])
-  const refs = useRef(views.map(() => createRef<HTMLDivElement>()))
+  const { refs } = useApp()
 
-  useScrollController({ refs })
+  useScrollController()
 
   return (
     <div className='relative bg-black'>
-      {views.map(({ element: View }, i) => {
+      {VIEWS_CONFIG.map(({ element: View }, i) => {
         return (
           <View
             key={i}
             sectionIndex={i}
             ref={refs.current[i]}
-            scrollLock={views[i].scrollLock}
-            anchor={views[i].anchor}
+            scrollLock={VIEWS_CONFIG[i].scrollLock}
+            anchor={VIEWS_CONFIG[i].anchor}
           />
         )
       })}

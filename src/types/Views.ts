@@ -19,3 +19,10 @@ export interface Project {
   type: string
   icons: { title: string; icon: IconType }[]
 }
+
+export interface ViewHTMLDivElement extends HTMLDivElement {
+  dataset: {
+    sectionId: string
+    scrollLock: string
+  }
+}

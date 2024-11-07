@@ -2,7 +2,7 @@
 
 import ScrollableImage from '@/components/ScrollableImage'
 import useInternalRef from '@/hooks/useInternalRef'
-import useSetView from '@/hooks/useSetView'
+import useSetVisibleSection from '@/hooks/useSetVisibleSection'
 import { childViewProps } from '@/types/Views'
 import clsx from 'clsx'
 import { motion, useInView } from 'framer-motion'
@@ -15,16 +15,17 @@ const View2 = forwardRef<HTMLDivElement, childViewProps>(function View2(
   ref,
 ) {
   const { internalRef } = useInternalRef(ref)
-  useSetView(internalRef, sectionIndex)
+  useSetVisibleSection(internalRef, sectionIndex)
 
-  const { currentView } = useApp()
-  const isInView = currentView === sectionIndex
+  const { visibleSection } = useApp()
+  const isInView = Number(visibleSection?.dataset.sectionId) === sectionIndex
 
   return (
     <section
       id={anchor}
       className='relative w-full h-[100vh]'
       ref={ref}
+      data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>
       <ScrollableImage
         alt='Mik ten Holt'

@@ -1,160 +1,163 @@
-import { VIEWS_CONFIG } from '@/config/viewsConfig'
+'use client'
+
 import { useApp } from '@/context/AppContext'
-import { RefObject, useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import useTransition from './useTransition'
 
-interface useScrollControllerProps {
-  refs: RefObject<RefObject<HTMLDivElement | null>[]>
-}
-
-const useScrollController = ({ refs }: useScrollControllerProps) => {
-  const scrollingThreshold = 50
-  const lastWheelEventTime = useRef<number>(0)
-
-  const lastTouch = useRef<Touch | null>(null)
-
+/**
+ * This hook is responsible for controlling the scrolling behavior of the app, based on certain events.
+ *
+ * Controller 1: Wheel Event
+ *
+ * Controller 2: Touch Event
+ *
+ * Controller 3: Key Event
+ */
+const useScrollerController = () => {
   const {
-    isTransitioning,
-    setIsTransitioning,
+    refs,
     isScrolling,
     setIsScrolling,
-    scrollingDirection,
-    setScrollingDirection,
-    isLocked,
-    currentView,
-    setView,
-    lock,
-    unlock,
+    isTransitioning,
+    setIsTransitioning,
+    visibleSection,
+    setLog,
   } = useApp()
 
-  const timer = useRef<NodeJS.Timeout | null>(null)
+  const { transitionTo } = useTransition()
 
-  const scrollDown = useCallback(() => {
-    if (currentView === undefined) return
-    if (currentView < VIEWS_CONFIG.length - 1) {
-      setIsTransitioning(true)
-      setIsScrolling(true)
-
-      const newInView = currentView + 1
-      refs.current[newInView]?.current?.scrollIntoView({ behavior: 'smooth' })
-      setView(newInView)
-    }
-  }, [currentView, setView, refs, setIsTransitioning, setIsScrolling])
-
-  const scrollUp = useCallback(() => {
-    if (currentView === undefined) return
-    if (currentView > 0) {
-      setIsTransitioning(true)
-      setIsScrolling(true)
-
-      const newInView = currentView - 1
-      refs.current[newInView]?.current?.scrollIntoView({ behavior: 'smooth' })
-      setView(newInView)
-    }
-  }, [currentView, setView, refs, setIsTransitioning, setIsScrolling])
+  const scrollingInstanceTreshold = 35
+  const lastWheelEventTimestamp = useRef<number>(0)
+  const lastTouchEventTimestamp = useRef<Touch | null>(null)
+  const wheelTimer = useRef<NodeJS.Timeout | null>(null)
+  const touchTimer = useRef<NodeJS.Timeout | null>(null)
+  const [scrollingDirection, setScrollingDirection] = useState<
+    'up' | 'down' | null
+  >(null)
 
   useEffect(() => {
-    const scrollController = new AbortController()
-    const { signal } = scrollController
+    const scrollerController = new AbortController()
+    const { signal } = scrollerController
 
-    const handleWheel = (e: WheelEvent) => {
-      const direction = e.deltaY > 0 ? 'down' : 'up'
-      const previousDirection = scrollingDirection
-      setScrollingDirection(direction)
+    /**
+     * WHEEL EVENT
+     */
+    function handleWheelEvent(event: WheelEvent) {
+      if (visibleSection === null) return
+      setIsScrolling(true)
 
-      if (timer.current) clearTimeout(timer.current)
-      timer.current = setTimeout(() => {
-        timer.current = null
+      const currentTime = Date.now()
+      const timeSinceLastScroll = currentTime - lastWheelEventTimestamp.current
+
+      const isNewScroll = timeSinceLastScroll > scrollingInstanceTreshold
+
+      if (isNewScroll) {
         setIsScrolling(false)
         setScrollingDirection(null)
-      }, 500)
+      }
 
-      if (isScrolling) {
-        const timeSinceLastWheel = Date.now() - lastWheelEventTime.current
+      // Update the last scroll time
+      lastWheelEventTimestamp.current = currentTime
 
-        // If scrolling is still active, check if it's a new instance
-        if (timeSinceLastWheel > scrollingThreshold) {
-          clearTimeout(timer.current)
-          setIsScrolling(false)
-          setScrollingDirection(null)
+      // Continue with the rest of your scroll logic
+      if (!isTransitioning && !isScrolling) {
+        const visibleSectionId = Number(visibleSection.dataset.sectionId)
+
+        if (event.deltaY < 0 && visibleSectionId > 0) {
+          // Scrolling up
+          const newSection = refs.current[visibleSectionId - 1].current
+          transitionTo(newSection)
+        } else if (
+          event.deltaY > 0 &&
+          visibleSectionId < refs.current.length - 1
+        ) {
+          // Scrolling down
+          const newSection = refs.current[visibleSectionId + 1].current
+          transitionTo(newSection)
         }
       }
 
-      if (
-        (!isTransitioning && !isScrolling && isLocked) ||
-        (isScrolling && scrollingDirection !== previousDirection)
-      ) {
-        if (e.deltaY > 0) {
-          lock()
-          scrollDown()
-        } else if (e.deltaY < 0) {
-          scrollUp()
-        }
-      }
-
-      lastWheelEventTime.current = Date.now()
+      // Reset the `isScrolling` flag after the defined timeout
+      if (wheelTimer.current) clearTimeout(wheelTimer.current)
+      wheelTimer.current = setTimeout(() => {
+        setIsScrolling(false)
+        setScrollingDirection(null)
+      }, Number(process.env.NEXT_PUBLIC_EVENT_TIMEOUT))
     }
 
-    const handleKeyboard = (e: KeyboardEvent) => {
-      if (isTransitioning) return
-
-      if (e.key === 'ArrowDown') {
-        lock()
-        scrollDown()
-      } else if (e.key === 'ArrowUp') {
-        lock()
-        scrollUp()
-      }
+    /**
+     * TOUCH START EVENT
+     */
+    function handleTouchStartEvent(event: TouchEvent) {
+      lastTouchEventTimestamp.current = event.touches[0]
     }
 
-    const handleTouchStart = (e: TouchEvent) => {
-      lastTouch.current = e.touches[0]
-    }
-
-    const handleTouchEnd = (e: TouchEvent) => {
+    /**
+     * TOUCH START EVENT
+     */
+    function handleTouchEndEvent(event: TouchEvent) {
+      // Checking if user is swiping up or down
       const differenceY =
-        e.changedTouches[0].clientY - lastTouch.current!.clientY
+        event.changedTouches[0].clientY -
+        lastTouchEventTimestamp.current!.clientY
 
       const differenceX =
-        e.changedTouches[0].clientX - lastTouch.current!.clientX
+        event.changedTouches[0].clientX -
+        lastTouchEventTimestamp.current!.clientX
 
-      // Swiping Y
+      // Swiping up or down
       if (Math.abs(differenceY) > Math.abs(differenceX)) {
-        if (isLocked) {
-          if (differenceY > 0) {
-            scrollUp()
-          } else {
-            scrollDown()
-          }
+        const visibleSectionId = Number(visibleSection?.dataset.sectionId)
+        if (differenceY > 0 && visibleSectionId > 0) {
+          const newSection = refs.current[visibleSectionId - 1].current
+          transitionTo(newSection)
+        } else if (
+          differenceY < 0 &&
+          visibleSectionId < refs.current.length - 1
+        ) {
+          const newSection = refs.current[visibleSectionId + 1].current
+          transitionTo(newSection)
         }
       }
     }
 
-    const handleScrollEnd = () => {
-      console.log('scrollend')
-      setIsTransitioning(false)
+    /**
+     * Key EVENT
+     */
+    function handleKeyEvent(event: KeyboardEvent) {
+      if (isTransitioning || !visibleSection) return
+
+      if (event.key === 'ArrowDown') {
+        const visibleSectionId = Number(visibleSection.dataset.sectionId)
+        if (visibleSectionId < refs.current.length - 1) {
+          const newSection = refs.current[visibleSectionId + 1].current
+          transitionTo(newSection, true)
+        }
+      } else if (event.key === 'ArrowUp') {
+        const visibleSectionId = Number(visibleSection.dataset.sectionId)
+        if (visibleSectionId > 0) {
+          const newSection = refs.current[visibleSectionId - 1].current
+          transitionTo(newSection, true)
+        }
+      }
     }
 
-    window.addEventListener('wheel', handleWheel, { signal })
-    window.addEventListener('touchstart', handleTouchStart, { signal })
-    window.addEventListener('touchend', handleTouchEnd, { signal })
-    window.addEventListener('keydown', handleKeyboard, { signal })
-    window.addEventListener('scrollend', handleScrollEnd, { signal })
+    // Registering the events
+    addEventListener('wheel', handleWheelEvent, { signal })
+    addEventListener('touchstart', handleTouchStartEvent, { signal })
+    addEventListener('touchend', handleTouchEndEvent, { signal })
+    addEventListener('keydown', handleKeyEvent, { signal })
 
-    return () => {
-      scrollController.abort()
-    }
+    return () => scrollerController.abort()
   }, [
     isTransitioning,
-    isLocked,
-    scrollUp,
-    scrollDown,
+    refs,
+    transitionTo,
+    visibleSection,
+    setIsScrolling,
     setIsTransitioning,
     isScrolling,
-    setIsScrolling,
-    scrollingDirection,
-    setScrollingDirection,
-    lock,
   ])
 }
 
-export default useScrollController
+export default useScrollerController

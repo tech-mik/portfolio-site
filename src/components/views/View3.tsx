@@ -9,22 +9,22 @@ import { anOldHope as highlightTheme } from 'react-syntax-highlighter/dist/cjs/s
 const SyntaxHighlighter = Sntx as typeof Component<SyntaxHighlighterProps>
 
 import TypeOut from '@/components/TypeOut'
-import useInternalRef from '@/hooks/useInternalRef'
-import useSetView from '@/hooks/useSetView'
-import { removeIndentation } from '@/utils'
-import { motion, useInView } from 'framer-motion'
-import ScrollableText from '../ScrollableText'
 import { useApp } from '@/context/AppContext'
+import useInternalRef from '@/hooks/useInternalRef'
+import useSetVisibleSection from '@/hooks/useSetVisibleSection'
+import { removeIndentation } from '@/utils'
+import { motion } from 'framer-motion'
+import ScrollableText from '../ScrollableText'
 
 const View3 = forwardRef<HTMLDivElement, childViewProps>(function View3(
   { sectionIndex, scrollLock, anchor },
   ref,
 ) {
   const { internalRef } = useInternalRef(ref)
-  useSetView(internalRef, sectionIndex)
+  useSetVisibleSection(internalRef, sectionIndex)
 
-  const { currentView } = useApp()
-  const isInView = currentView === sectionIndex
+  const { visibleSection } = useApp()
+  const isInView = Number(visibleSection?.dataset.sectionId) === sectionIndex
 
   const codeString = removeIndentation(`
     let profession = 'Boring job';
@@ -41,6 +41,7 @@ const View3 = forwardRef<HTMLDivElement, childViewProps>(function View3(
       id={anchor}
       className='relative w-full h-[100vh]'
       ref={ref}
+      data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>
       <ScrollableImage
         alt='Mik ten Holt'
