@@ -35,17 +35,17 @@ const useTransition = () => {
       const scrollBottom =
         visibleSection.scrollHeight - visibleSection.clientHeight - scrollTop
 
-      if (newSectionId !== currentSectionId) {
-        // Scrolling down
-        setLog(`scrollTop: ${scrollTop}, scrollBottom: ${scrollBottom}`)
-        if (scrollBottom <= 0 && scrollTop > 0) {
+      setLog(`scrollTop: ${scrollTop}, scrollBottom: ${scrollBottom}`)
+      if (newSectionId > currentSectionId) {
+        if (scrollBottom === 0) {
           setIsTransitioning(true)
           section.scrollIntoView({
             behavior: 'smooth',
           })
         }
+      } else if (newSectionId < currentSectionId) {
         // Scrolling up
-        if (scrollTop <= 0 && scrollBottom > 0) {
+        if (scrollTop === 0) {
           setIsTransitioning(true)
           section.scrollIntoView({
             behavior: 'smooth',
