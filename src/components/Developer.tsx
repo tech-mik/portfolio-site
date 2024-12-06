@@ -1,7 +1,6 @@
 'use client'
 
 import { useApp } from '@/context/AppContext'
-import { Unlock } from 'next/font/google'
 import { useState } from 'react'
 
 const Developer = () => {

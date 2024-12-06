@@ -43,7 +43,6 @@ const useScrollerController = () => {
      * WHEEL EVENT
      */
     function handleWheelEvent(event: WheelEvent) {
-      console.log('wheel event')
       if (visibleSection === null) return
       setIsScrolling(true)
 
