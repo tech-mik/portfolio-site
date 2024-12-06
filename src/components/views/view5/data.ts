@@ -87,7 +87,7 @@ export const projects: Project[] = [
     github: 'https://github.com/tech-mik/the-wild-oasis-website-ts',
     URL: 'https://the-wild-oasis-website-ts.vercel.app',
     description:
-      'A website for a fictional resort in the middle of the jungle. A place to relax and enjoy the nature.',
+      'A website for a fictional resort in the middle of the jungle. A place to relax and enjoy the nature. I migrated this project to TypeScript.',
     image: projectWildOasis,
     type: 'Course Project',
     icons: [
