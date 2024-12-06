@@ -23,10 +23,8 @@ type useSetVisibleSection = (
  * The hook also handles scroll locking and unlocking based on the `data-scroll-lock` attribute of the section element.
  *
  * @example
- * ```tsx
  * const sectionRef = useRef<HTMLDivElement>(null);
  * useSetVisibleSection(sectionRef, 1);
- * ```
  */
 const useSetVisibleSection: useSetVisibleSection = (ref) => {
   const { setVisibleSection } = useApp()
