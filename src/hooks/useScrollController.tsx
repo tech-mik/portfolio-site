@@ -93,7 +93,7 @@ const useScrollerController = () => {
     }
 
     /**
-     * TOUCH START EVENT
+     * TOUCH END EVENT
      */
     function handleTouchEndEvent(event: TouchEvent) {
       // Checking if user is swiping up or down
@@ -140,6 +140,12 @@ const useScrollerController = () => {
           transitionTo(newSection, true)
         }
       }
+    }
+
+    function handleSizeAndLoad() {
+      visibleSection?.scrollIntoView({
+        behavior: 'smooth',
+      })
     }
 
     // Registering the events

@@ -1,6 +1,7 @@
 'use client'
 
 import { useApp } from '@/context/AppContext'
+import { ViewHTMLDivElement } from '@/types/Views'
 import { RefObject, useCallback, useEffect, useRef } from 'react'
 
 type useSetVisibleSection = (
@@ -39,6 +40,7 @@ const useSetVisibleSection: useSetVisibleSection = (ref) => {
 
     if (top < innerHeight / 2 && bottom > innerHeight / 2) {
       setVisibleSection(section)
+      console.log(section)
     }
   }, [ref, setVisibleSection])
 
