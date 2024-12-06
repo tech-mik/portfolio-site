@@ -142,12 +142,6 @@ const useScrollerController = () => {
       }
     }
 
-    function handleSizeAndLoad() {
-      visibleSection?.scrollIntoView({
-        behavior: 'smooth',
-      })
-    }
-
     // Registering the events
     addEventListener('wheel', handleWheelEvent, { signal })
     addEventListener('touchstart', handleTouchStartEvent, { signal })

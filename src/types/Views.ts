@@ -14,9 +14,10 @@ export interface childViewProps {
 export interface Project {
   title: string
   github: string
+  URL: string
   description: string
   image: StaticImageData
-  type: string
+  type: 'Hobby Project' | 'Course Project' | 'Work Project'
   icons: { title: string; icon: IconType }[]
 }
 

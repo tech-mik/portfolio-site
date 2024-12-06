@@ -37,7 +37,7 @@ const useTransition = () => {
 
       setLog(`scrollTop: ${scrollTop}, scrollBottom: ${scrollBottom}`)
       if (newSectionId > currentSectionId) {
-        if (scrollBottom < 0) {
+        if (scrollBottom <= 0) {
           setIsTransitioning(true)
           section.scrollIntoView({
             behavior: 'smooth',
@@ -45,7 +45,7 @@ const useTransition = () => {
         }
       } else if (newSectionId < currentSectionId) {
         // Scrolling up
-        if (scrollTop < 0) {
+        if (scrollTop <= 0) {
           setIsTransitioning(true)
           section.scrollIntoView({
             behavior: 'smooth',
