@@ -4,10 +4,10 @@ import { contactFormSchema } from '@/config/contactFormSchema'
 import { z } from 'zod'
 import nodemailer from 'nodemailer'
 import { headers } from 'next/headers'
+import { getIp } from '@/lib/utils'
 
 export const sendForm = async (values: z.infer<typeof contactFormSchema>) => {
-  const ip = (await headers()).get('x-forwarded-for')
-  console.log(ip)
+  const ip = getIp(headers)
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -23,7 +23,6 @@ export const sendForm = async (values: z.infer<typeof contactFormSchema>) => {
     await contactFormSchema.parseAsync(values)
 
     await transporter.sendMail({
-      from: values.email,
       to: 'miktenholt@gmail.com',
       subject: 'New message from your website!',
       html: `Name: ${values.name}<br>Email: ${values.email}<br>Organization: ${values.organization}<br>Message: ${values.message}`,
