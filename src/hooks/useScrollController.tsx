@@ -30,6 +30,7 @@ const useScrollerController = () => {
   const lastWheelEventTimestamp = useRef<number>(0)
   const lastTouchEventTimestamp = useRef<Touch | null>(null)
   const wheelTimer = useRef<NodeJS.Timeout | null>(null)
+  const resizeTimer = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     const scrollerController = new AbortController()
@@ -144,11 +145,21 @@ const useScrollerController = () => {
       }
     }
 
+    function handleResizeEvent() {
+      if (resizeTimer.current) clearTimeout(resizeTimer.current)
+      resizeTimer.current = setTimeout(() => {
+        if (visibleSection) {
+          visibleSection.scrollIntoView({ behavior: 'instant' })
+        }
+      }, 100)
+    }
+
     // Registering the events
     addEventListener('wheel', handleWheelEvent, { signal })
     addEventListener('touchstart', handleTouchStartEvent, { signal })
     addEventListener('touchend', handleTouchEndEvent, { signal })
     addEventListener('keydown', handleKeyEvent, { signal })
+    addEventListener('resize', handleResizeEvent, { signal })
 
     return () => scrollerController.abort()
   }, [

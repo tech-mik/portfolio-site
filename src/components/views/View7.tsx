@@ -37,14 +37,14 @@ const View7 = forwardRef<ViewHTMLDivElement, childViewProps>(function View7(
         backgroundRepeat: 'no-repeat',
       }}
       initial={{ backgroundColor: '#FFFFFF' }}
-      className='relative z-20 flex flex-col justify-center items-center gap-10 bg-pink-500 px-10 lg:pt-32 lg:pb-20 h-screen'
+      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-pink-500 px-10 py-10 lg:pt-32 h-dvh overflow-y-auto'
       ref={ref}
       data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>
       <h2 className='font-arima font-black text-4xl text-black lg:text-6xl'>
         Let&apos;s grab a coffee ☕️
       </h2>
-      <div className='border-gray-100 bg-white shadow-xl p-12 border rounded-xl container'>
+      <div className='border-gray-100 bg-white shadow-xl p-5 lg:p-12 border rounded-xl container'>
         <ContactForm />
       </div>
     </motion.section>

@@ -13,7 +13,7 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
   return (
     <section
       id={anchor}
-      className='relative z-20 flex flex-col justify-center items-center bg-black h-screen'
+      className='relative z-20 flex flex-col justify-center items-center bg-black h-svh'
       ref={ref}
       data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>

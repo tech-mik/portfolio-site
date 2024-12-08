@@ -47,6 +47,8 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
   width: 'device-width',
+  viewportFit: 'cover',
+  // interactiveWidget: 'resizes-content',
 }
 
 export default function RootLayout({
@@ -65,7 +67,7 @@ export default function RootLayout({
             className={`antialiased bg-black overflow-hidden transition-transform`}>
             {process.env.DEVELOPER_BLOCK === 'true' && <Developer />}
             <Header />
-            <main className='w-full min-h-screen'>{children}</main>
+            <main className='w-full min-h-lvh'>{children}</main>
           </body>
         </AppContextProvider>
       </html>

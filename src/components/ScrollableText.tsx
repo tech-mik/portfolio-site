@@ -16,7 +16,7 @@ const ScrollableText = ({
 }: ScrollableTextProps) => {
   const props = {
     className: clsx(
-      'top-10 lg:top-0 z-10 fixed flex flex-col justify-start lg:justify-center items-center space-y-2 w-full lg:w-1/2 h-[100vh] font-light text-6xl text-left text-white lg:text-6xl xl:text-7xl 2xl:text-8xl transition-opacity duration-700 ease-in-out',
+      'top-10 lg:top-0 z-10 fixed flex flex-col justify-start lg:justify-center items-center space-y-2 w-full lg:w-1/2 h-lvh font-light text-6xl text-left text-white lg:text-6xl xl:text-7xl 2xl:text-8xl transition-opacity duration-700 ease-in-out',
       side === 'left' && 'left-0',
       side === 'right' && 'right-0',
       className,

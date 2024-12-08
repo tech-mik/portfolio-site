@@ -23,7 +23,7 @@ const View2 = forwardRef<ViewHTMLDivElement, childViewProps>(function View2(
   return (
     <section
       id={anchor}
-      className='relative w-full h-[100vh]'
+      className='relative w-full h-dvh'
       ref={ref}
       data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>
