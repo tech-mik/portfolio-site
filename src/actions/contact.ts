@@ -7,7 +7,7 @@ import { headers } from 'next/headers'
 
 export const sendForm = async (values: z.infer<typeof contactFormSchema>) => {
   const ip = (await headers()).get('x-forwarded-for')
-  return console.log(ip)
+  console.log(ip)
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
