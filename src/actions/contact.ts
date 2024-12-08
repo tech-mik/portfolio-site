@@ -23,6 +23,7 @@ export const sendForm = async (values: z.infer<typeof contactFormSchema>) => {
     await contactFormSchema.parseAsync(values)
 
     await transporter.sendMail({
+      from: values.email,
       to: 'miktenholt@gmail.com',
       subject: 'New message from your website!',
       html: `Name: ${values.name}<br>Email: ${values.email}<br>Organization: ${values.organization}<br>Message: ${values.message}`,
