@@ -20,7 +20,6 @@ const View5 = forwardRef<ViewHTMLDivElement, childViewProps>(function View5(
   ref,
 ) {
   const { internalRef } = useInternalRef(ref)
-  const [isInView, setIsInView] = useState(false)
   const [isInViewOnce, setIsInViewOnce] = useState(false)
 
   useSetVisibleSection(internalRef, sectionIndex)
@@ -35,10 +34,7 @@ const View5 = forwardRef<ViewHTMLDivElement, childViewProps>(function View5(
 
   useMotionValueEvent(scrollYProgress, 'change', (value: number) => {
     if ((value >= 0.8 && visibleSection) || 0 <= sectionIndex) {
-      setIsInView(true)
       setIsInViewOnce(true)
-    } else {
-      setIsInView(false)
     }
   })
 
@@ -47,8 +43,6 @@ const View5 = forwardRef<ViewHTMLDivElement, childViewProps>(function View5(
     [0.4, 1],
     ['#000000', '#fafafa'],
   )
-
-  const opacity = useTransform(scrollYProgress, [0.4, 1], [0, 1])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -61,7 +55,7 @@ const View5 = forwardRef<ViewHTMLDivElement, childViewProps>(function View5(
   return (
     <motion.section
       id={anchor}
-      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white py-10 lg:pt-28 h-screen overflow-y-scroll'
+      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white py-10 lg:py-28 h-screen overflow-y-scroll'
       initial={{ backgroundColor: '#FFFFFF' }}
       style={{
         backgroundColor,
