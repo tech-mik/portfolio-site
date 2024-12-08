@@ -37,7 +37,7 @@ const View7 = forwardRef<ViewHTMLDivElement, childViewProps>(function View7(
         backgroundRepeat: 'no-repeat',
       }}
       initial={{ backgroundColor: '#FFFFFF' }}
-      className='relative z-20 flex flex-col justify-center items-center gap-10 bg-pink-500 px-10 pt-32 pb-20 h-screen'
+      className='relative z-20 flex flex-col justify-center items-center gap-10 bg-pink-500 px-10 lg:pt-32 lg:pb-20 h-screen'
       ref={ref}
       data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>

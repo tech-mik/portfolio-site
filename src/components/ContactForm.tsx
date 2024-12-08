@@ -20,6 +20,7 @@ import { RiEraserFill } from 'react-icons/ri'
 import { PiPencilFill, PiSpinnerFill } from 'react-icons/pi'
 import { useState } from 'react'
 import { sendForm } from '@/actions/contact'
+import FormButtons from './FormButtons'
 
 const ContactForm = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -56,7 +57,7 @@ const ContactForm = () => {
         <div className='top-0 right-0 bottom-0 left-0 z-10 absolute justify-center items-center hidden bg-white w-full h-full'>
           Hello
         </div>
-        <div className='z-0 gap-10 grid grid-cols-2 w-full'>
+        <div className='z-0 flex flex-col gap-2 lg:gap-10 lg:grid lg:grid-cols-2 grid-rows-1 w-full'>
           <div className='space-y-2'>
             <FormField
               control={form.control}
@@ -123,36 +124,11 @@ const ContactForm = () => {
                 </FormItem>
               )}
             />
-            <div className='flex gap-2'>
-              <Button
-                className='w-full'
-                variant='default'
-                disabled={isLoading || !form.formState.isValid}>
-                {form.formState.isValid ? (
-                  <>
-                    {isLoading ? (
-                      <PiSpinnerFill className='animate-spin' />
-                    ) : (
-                      <HiPaperAirplane />
-                    )}
-                    Paper Plane!
-                  </>
-                ) : (
-                  <>
-                    <PiPencilFill /> Fill in the form
-                  </>
-                )}
-              </Button>
-              <Button
-                type='reset'
-                className='w-full'
-                variant='outline'
-                disabled={isLoading}
-                onClick={() => form.reset()}>
-                <RiEraserFill />
-                Clear Fields
-              </Button>
-            </div>
+            <FormButtons
+              form={form}
+              isLoading={isLoading}
+              className='lg:flex hidden'
+            />
           </div>
           <div>
             <FormField
@@ -167,13 +143,18 @@ const ContactForm = () => {
                     <Textarea
                       placeholder='What do you have in your coffee?'
                       {...field}
-                      className='h-full'
+                      className='lg:h-full'
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
           </div>
+          <FormButtons
+            form={form}
+            isLoading={isLoading}
+            className='flex lg:hidden mt-5'
+          />
         </div>
       </form>
     </Form>

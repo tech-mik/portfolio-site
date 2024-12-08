@@ -19,20 +19,7 @@ const Header = () => {
     },
   }
   return (
-    <header className='top-0 z-30 sticky flex justify-center p-2'>
-      {/* <motion.div
-        className={cn(
-          `top-2 absolute lg:flex justify-between items-center hidden bg-gray-50/80 border border-gray-200/80 drop-shadow-xl mx-auto px-10 py-4 rounded-xl w-[650px] text-black backdrop-blur`,
-        )}
-        {...animation}
-        initial={{ translateY: -100 }}
-        animate={{
-          translateY: floatingMenu ? 0 : -100,
-        }}>
-        <Logo />
-        <Navigation />
-      </motion.div> */}
-
+    <header className='top-0 z-30 sticky flex justify-center p-4'>
       <motion.div
         className={cn(
           `lg:flex justify-between items-center hidden p-7 py-4 w-full bg-gray-50/80 text-black drop-shadow-xl rounded-xl backdrop-blur-md`,
