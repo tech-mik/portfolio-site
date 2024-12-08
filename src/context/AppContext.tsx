@@ -15,8 +15,8 @@ import {
 
 interface AppContextType {
   refs: RefObject<RefObject<ViewHTMLDivElement | null>[]>
-  visibleSection: HTMLDivElement | null
-  setVisibleSection: Dispatch<SetStateAction<HTMLDivElement | null>>
+  visibleSection: ViewHTMLDivElement | null
+  setVisibleSection: Dispatch<SetStateAction<ViewHTMLDivElement | null>>
   isScrolling: boolean
   setIsScrolling: Dispatch<SetStateAction<boolean>>
   isTransitioning: boolean
@@ -34,9 +34,8 @@ export default function AppContextProvider({
 }) {
   const refs = useRef(VIEWS_CONFIG.map(() => createRef<ViewHTMLDivElement>()))
 
-  const [visibleSection, setVisibleSection] = useState<HTMLDivElement | null>(
-    null,
-  )
+  const [visibleSection, setVisibleSection] =
+    useState<ViewHTMLDivElement | null>(null)
   const [isScrolling, setIsScrolling] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [log, setLog] = useState('')

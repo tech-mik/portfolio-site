@@ -1,13 +1,12 @@
 'use client'
 
-import { childViewProps } from '@/types/Views'
+import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import {
   motion,
   useMotionValueEvent,
   useScroll,
   useTransform,
 } from 'framer-motion'
-import Image from 'next/image'
 import { forwardRef, useState } from 'react'
 
 import { useApp } from '@/context/AppContext'
@@ -16,7 +15,7 @@ import useSetVisibleSection from '@/hooks/useSetVisibleSection'
 import ProjectCard from './ProjectCard'
 import { projects } from './data'
 
-const View5 = forwardRef<HTMLDivElement, childViewProps>(function View5(
+const View5 = forwardRef<ViewHTMLDivElement, childViewProps>(function View5(
   { sectionIndex, scrollLock, anchor },
   ref,
 ) {
@@ -62,7 +61,7 @@ const View5 = forwardRef<HTMLDivElement, childViewProps>(function View5(
   return (
     <motion.section
       id={anchor}
-      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white pt-20 pb-20 h-screen overflow-y-scroll'
+      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white py-10 lg:pt-28 h-screen overflow-y-scroll'
       initial={{ backgroundColor: '#FFFFFF' }}
       style={{
         backgroundColor,

@@ -1,9 +1,9 @@
 import useInternalRef from '@/hooks/useInternalRef'
 import useSetVisibleSection from '@/hooks/useSetVisibleSection'
-import { childViewProps } from '@/types/Views'
+import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import { forwardRef } from 'react'
 
-const View6 = forwardRef<HTMLDivElement, childViewProps>(function View6(
+const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
   { sectionIndex, scrollLock, anchor },
   ref,
 ) {

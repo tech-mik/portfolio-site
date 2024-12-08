@@ -3,14 +3,14 @@
 import ScrollableImage from '@/components/ScrollableImage'
 import useInternalRef from '@/hooks/useInternalRef'
 import useSetVisibleSection from '@/hooks/useSetVisibleSection'
-import { childViewProps } from '@/types/Views'
+import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import clsx from 'clsx'
 import { motion, useInView } from 'framer-motion'
 import { forwardRef } from 'react'
 import ScrollableText from '../ScrollableText'
 import { useApp } from '@/context/AppContext'
 
-const View4 = forwardRef<HTMLDivElement, childViewProps>(function View4(
+const View4 = forwardRef<ViewHTMLDivElement, childViewProps>(function View4(
   { sectionIndex, scrollLock, anchor },
   ref,
 ) {

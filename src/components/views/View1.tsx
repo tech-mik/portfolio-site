@@ -1,7 +1,7 @@
 'use client'
 
 import ScrollableImage from '@/components/ScrollableImage'
-import { childViewProps } from '@/types/Views'
+import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import clsx from 'clsx'
 import { forwardRef } from 'react'
 
@@ -11,7 +11,7 @@ import useSetVisibleSection from '@/hooks/useSetVisibleSection'
 import ScrollableText from '../ScrollableText'
 import { useApp } from '@/context/AppContext'
 
-const View1 = forwardRef<HTMLDivElement, childViewProps>(function View1(
+const View1 = forwardRef<ViewHTMLDivElement, childViewProps>(function View1(
   { sectionIndex, scrollLock, anchor },
   ref,
 ) {

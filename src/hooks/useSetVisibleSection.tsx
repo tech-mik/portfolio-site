@@ -5,7 +5,7 @@ import { ViewHTMLDivElement } from '@/types/Views'
 import { RefObject, useCallback, useEffect, useRef } from 'react'
 
 type useSetVisibleSection = (
-  ref: RefObject<HTMLDivElement | null>,
+  ref: RefObject<ViewHTMLDivElement | null>,
   sectionIndex: number,
 ) => void
 
@@ -24,7 +24,7 @@ type useSetVisibleSection = (
  * The hook also handles scroll locking and unlocking based on the `data-scroll-lock` attribute of the section element.
  *
  * @example
- * const sectionRef = useRef<HTMLDivElement>(null);
+ * const sectionRef = useRef<ViewHTMLDivElement>(null);
  * useSetVisibleSection(sectionRef, 1);
  */
 const useSetVisibleSection: useSetVisibleSection = (ref) => {
@@ -40,7 +40,6 @@ const useSetVisibleSection: useSetVisibleSection = (ref) => {
 
     if (top < innerHeight / 2 && bottom > innerHeight / 2) {
       setVisibleSection(section)
-      console.log(section)
     }
   }, [ref, setVisibleSection])
 

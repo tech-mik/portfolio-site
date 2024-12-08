@@ -61,7 +61,8 @@ export default function RootLayout({
         lang='en'
         className={`${dancingscript.variable} ${londrinasolid.variable} ${poppins.variable} ${arima.variable}`}>
         <AppContextProvider>
-          <body className={`antialiased bg-black overflow-hidden`}>
+          <body
+            className={`antialiased bg-black overflow-hidden transition-transform`}>
             {process.env.DEVELOPER_BLOCK === 'true' && <Developer />}
             <Header />
             <main className='w-full min-h-screen'>{children}</main>

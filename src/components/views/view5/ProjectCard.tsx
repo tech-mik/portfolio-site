@@ -1,3 +1,4 @@
+import ProjectTypeBadge from '@/components/ProjectTypeBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -6,7 +7,7 @@ import {
 } from '@/components/ui/tooltip'
 import { IconWithTooltip } from '@/components/views/view5'
 import { Project } from '@/types/Views'
-import { HTMLMotionProps, motion, useInView, Variants } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
@@ -61,9 +62,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <span className='bg-green-300 px-2 p-0.5 rounded-full text-[10px] text-green-950 text-xs whitespace-nowrap'>
-              {project.type}
-            </span>{' '}
+            <ProjectTypeBadge projectType={project.type} />
           </div>
           <p className='text-sm'>{project.description}</p>
         </div>

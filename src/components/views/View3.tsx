@@ -1,7 +1,7 @@
 'use client'
 
 import ScrollableImage from '@/components/ScrollableImage'
-import { childViewProps } from '@/types/Views'
+import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import { Component, forwardRef } from 'react'
 
 import Sntx, { SyntaxHighlighterProps } from 'react-syntax-highlighter'
@@ -16,7 +16,7 @@ import { removeIndentation } from '@/utils'
 import { motion } from 'framer-motion'
 import ScrollableText from '../ScrollableText'
 
-const View3 = forwardRef<HTMLDivElement, childViewProps>(function View3(
+const View3 = forwardRef<ViewHTMLDivElement, childViewProps>(function View3(
   { sectionIndex, scrollLock, anchor },
   ref,
 ) {

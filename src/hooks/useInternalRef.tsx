@@ -1,7 +1,8 @@
+import { ViewHTMLDivElement } from '@/types/Views'
 import { ForwardedRef, useEffect, useRef } from 'react'
 
-const useInternalRef = (externalRef: ForwardedRef<HTMLDivElement>) => {
-  const internalRef = useRef<HTMLDivElement>(null)
+const useInternalRef = (externalRef: ForwardedRef<ViewHTMLDivElement>) => {
+  const internalRef = useRef<ViewHTMLDivElement>(null)
 
   useEffect(() => {
     if (externalRef && typeof externalRef === 'object') {
