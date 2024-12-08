@@ -53,7 +53,7 @@ const ContactForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className='relative space-y-2'>
-        <div className='top-0 right-0 bottom-0 left-0 z-10 absolute flex justify-center items-center bg-white w-full h-full'>
+        <div className='top-0 right-0 bottom-0 left-0 z-10 absolute justify-center items-center hidden bg-white w-full h-full'>
           Hello
         </div>
         <div className='z-0 gap-10 grid grid-cols-2 w-full'>

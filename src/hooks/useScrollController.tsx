@@ -26,14 +26,8 @@ const useScrollerController = () => {
 
   const { transitionTo } = useTransition()
 
-  const scrollingInstanceTreshold = 35
-  const lastWheelEventTimestamp = useRef<number>(0)
   const lastTouchEventTimestamp = useRef<Touch | null>(null)
   const wheelTimer = useRef<NodeJS.Timeout | null>(null)
-  const touchTimer = useRef<NodeJS.Timeout | null>(null)
-  const [scrollingDirection, setScrollingDirection] = useState<
-    'up' | 'down' | null
-  >(null)
 
   useEffect(() => {
     const scrollerController = new AbortController()
@@ -47,17 +41,8 @@ const useScrollerController = () => {
       setIsScrolling(true)
 
       const currentTime = Date.now()
-      const timeSinceLastScroll = currentTime - lastWheelEventTimestamp.current
-
-      const isNewScroll = timeSinceLastScroll > scrollingInstanceTreshold
-
-      if (isNewScroll) {
-        setIsScrolling(false)
-        setScrollingDirection(null)
-      }
 
       // Update the last scroll time
-      lastWheelEventTimestamp.current = currentTime
 
       // Continue with the rest of your scroll logic
       if (!isTransitioning && !isScrolling) {
@@ -80,8 +65,8 @@ const useScrollerController = () => {
       // Reset the `isScrolling` flag after the defined timeout
       if (wheelTimer.current) clearTimeout(wheelTimer.current)
       wheelTimer.current = setTimeout(() => {
+        console.log('reset scorlling')
         setIsScrolling(false)
-        setScrollingDirection(null)
       }, Number(process.env.NEXT_PUBLIC_EVENT_TIMEOUT))
     }
 
