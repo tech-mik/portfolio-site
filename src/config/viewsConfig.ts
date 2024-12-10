@@ -1,9 +1,7 @@
-// viewsConfig.js
 import * as Views from '@/components/views'
 import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import { ForwardRefExoticComponent, RefAttributes } from 'react'
 
-// If using TypeScript, define types for views
 type ViewConfig = {
   element: ForwardRefExoticComponent<
     childViewProps & RefAttributes<ViewHTMLDivElement>

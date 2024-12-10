@@ -4,7 +4,6 @@ import { RiEraserFill } from 'react-icons/ri'
 import { Button } from './ui/button'
 import { UseFormReturn } from 'react-hook-form'
 import { cn } from '@/lib/utils'
-import { test } from '@/actions/test'
 
 interface FormButtonProps {
   isLoading: boolean
@@ -18,11 +17,6 @@ interface FormButtonProps {
 }
 
 const FormButtons = ({ isLoading, form, className }: FormButtonProps) => {
-  const testFunction = async () => {
-    const result = await test()
-    console.log(result)
-  }
-
   return (
     <div className={cn('gap-2', className)}>
       <Button
@@ -49,8 +43,7 @@ const FormButtons = ({ isLoading, form, className }: FormButtonProps) => {
         className='w-full'
         variant='outline'
         disabled={isLoading}
-        // onClick={() => form.reset()}>
-        onClick={testFunction}>
+        onClick={() => form.reset()}>
         <RiEraserFill />
         Clear Fields
       </Button>

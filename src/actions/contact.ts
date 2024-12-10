@@ -5,32 +5,72 @@ import { z } from 'zod'
 import nodemailer from 'nodemailer'
 import { headers } from 'next/headers'
 import { getIp } from '@/lib/utils'
+import { createMailRecord, getLatestMailRecordByIp } from '@/lib/db'
+import xss from 'xss'
 
 export const sendForm = async (values: z.infer<typeof contactFormSchema>) => {
-  const ip = getIp(headers)
-
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  })
-
   try {
-    await contactFormSchema.parseAsync(values)
+    const ip = await getIp(headers)
+    if (!ip)
+      return { success: false, error: { message: 'No IP address found' } }
 
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    })
+
+    // First validate form data
+    contactFormSchema.parse(values)
+
+    // Check if the user has sent too many emails
+    const latestRecord = await getLatestMailRecordByIp(ip)
+
+    // Sanitize form data
+    if (latestRecord.length) {
+      const lastRecord = latestRecord[0]
+      const lastRecordDate = new Date(lastRecord.createdAt)
+      const currentDate = new Date()
+
+      // One mail per 5 minutes is allowed
+      if (currentDate.getTime() - lastRecordDate.getTime() < 5 * 60 * 1000) {
+        return {
+          success: false,
+          error: { type: 'RateLimitException', message: 'too many emails' },
+        }
+      }
+    }
+
+    // Then create a record of the email in the database
+    // for rate limiting
+    await createMailRecord(ip)
+
+    // Send the email
     await transporter.sendMail({
       to: 'miktenholt@gmail.com',
       subject: 'New message from your website!',
-      html: `Name: ${values.name}<br>Email: ${values.email}<br>Organization: ${values.organization}<br>Message: ${values.message}`,
+      html: `Name: ${xss(values.name)}<br>Email: ${xss(
+        values.email,
+      )}<br>Organization: ${xss(values.organization)}<br>Message: ${xss(
+        values.message,
+      )}`,
     })
 
     return { success: true, error: null }
-  } catch (error) {
-    console.log(error)
+  } catch (error: unknown) {
+    if (error instanceof z.ZodError) {
+      return {
+        success: false,
+        error: { type: 'ValidationError', message: error.errors },
+      }
+    } else if (error instanceof Error) {
+      console.log(error)
+      return { success: false, error: { message: error.message } }
+    }
     return { success: false, error: true }
   }
 }
