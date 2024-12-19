@@ -31,7 +31,7 @@ const TerminalAction = ({
     const form = e.currentTarget as HTMLFormElement
     const input = form.elements.namedItem('input') as HTMLInputElement
 
-    if (input.value === 'y') {
+    if (input.value.toLowerCase() === 'y') {
       input.blur()
       setActionFired(true)
       action()
@@ -63,7 +63,6 @@ const TerminalAction = ({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
-      <button type='submit' className='hidden' />
     </form>
   )
 }
