@@ -43,7 +43,6 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
 
   const handleFocus = () => {
     if (sectionIndex === Number(visibleSection?.dataset.sectionId)) {
-      console.log('handleFocus called')
       if (!frontendTyping) {
         frontendRef?.current?.focus()
       } else if (!backendTyping) {
@@ -108,10 +107,12 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
                 />
               ))}
               <span>&nbsp;</span>
+
               <TerminalAction
                 action={() => setBackendTyping(true)}
                 ref={backendRef}
                 actionText='Do you want to load backend skills? [y/n]:'
+                disabled={!frontendTyping}
               />
             </div>
           </TypeOut>

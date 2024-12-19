@@ -5,9 +5,15 @@ interface TerminalActionProps {
   action: () => void
   ref: React.RefObject<HTMLInputElement | null>
   actionText: string
+  disabled?: boolean
 }
 
-const TerminalAction = ({ action, ref, actionText }: TerminalActionProps) => {
+const TerminalAction = ({
+  action,
+  ref,
+  actionText,
+  disabled,
+}: TerminalActionProps) => {
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const [actionFired, setActionFired] = useState(false)
@@ -46,7 +52,7 @@ const TerminalAction = ({ action, ref, actionText }: TerminalActionProps) => {
         {isFocused && <Caret />}
       </span>
       <input
-        disabled={actionFired}
+        disabled={disabled || actionFired}
         id='input'
         data-type='frontend'
         type='text'
