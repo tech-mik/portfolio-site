@@ -1,22 +1,11 @@
+import { Analytics } from '@vercel/analytics/react'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import { Analytics } from '@vercel/analytics/react'
 
-import Header from '@/components/Header'
-import {
-  Arima,
-  Dancing_Script,
-  Londrina_Solid,
-  Poppins,
-} from 'next/font/google'
-import AppContextProvider from '@/context/AppContext'
 import Developer from '@/components/Developer'
-
-const poppins = Poppins({
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  subsets: ['latin'],
-  variable: '--font-poppins',
-})
+import Header from '@/components/Header'
+import AppContextProvider from '@/context/AppContext'
+import { Arima, Dancing_Script, Londrina_Solid, VT323 } from 'next/font/google'
 
 const dancingscript = Dancing_Script({
   subsets: ['latin'],
@@ -36,6 +25,12 @@ const arima = Arima({
   variable: '--font-arima',
 })
 
+const vt323 = VT323({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-vt323',
+})
+
 export const metadata: Metadata = {
   title: 'Mik ten Holt - Portfolio',
   description:
@@ -48,7 +43,6 @@ export const viewport: Viewport = {
   userScalable: false,
   width: 'device-width',
   viewportFit: 'cover',
-  // interactiveWidget: 'resizes-content',
 }
 
 export default function RootLayout({
@@ -61,7 +55,7 @@ export default function RootLayout({
       <Analytics />
       <html
         lang='en'
-        className={`${dancingscript.variable} ${londrinasolid.variable} ${poppins.variable} ${arima.variable}`}>
+        className={`${dancingscript.variable} ${londrinasolid.variable} ${arima.variable} ${vt323.variable}`}>
         <AppContextProvider>
           <body
             className={`antialiased bg-black overflow-hidden transition-transform`}>

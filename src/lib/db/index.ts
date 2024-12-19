@@ -1,3 +1,5 @@
+'server-only'
+
 import 'dotenv/config'
 
 import { drizzle } from 'drizzle-orm/neon-http'

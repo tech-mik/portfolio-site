@@ -50,22 +50,15 @@ const useScrollerController = () => {
 
       if (isNewScroll) {
         setIsScrolling(false)
-        console.log('Set scrolling to false 1')
       }
 
       // Update the last scroll time
       lastWheelEventTimestamp.current = currentTime
 
-      // Continue with the rest of your scroll logic
+      // The actual scrolling logic
       if (!isTransitioning && !isScrolling) {
         const visibleSectionId = Number(visibleSection.dataset.sectionId)
 
-        console.log(`Up: ${event.deltaY < 0 && visibleSectionId > 0}`)
-        console.log(
-          `Down: ${
-            event.deltaY > 0 && visibleSectionId < refs.current.length - 1
-          }`,
-        )
         if (event.deltaY < 0 && visibleSectionId > 0) {
           // Scrolling up
           const newSection = refs.current[visibleSectionId - 1].current
@@ -81,10 +74,10 @@ const useScrollerController = () => {
       }
 
       // Reset the `isScrolling` flag after the defined timeout
+      // So the user can scroll again
       if (wheelTimer.current) clearTimeout(wheelTimer.current)
       wheelTimer.current = setTimeout(() => {
         setIsScrolling(false)
-        console.log('Set scrolling to false 2')
       }, Number(process.env.NEXT_PUBLIC_EVENT_TIMEOUT))
     }
 

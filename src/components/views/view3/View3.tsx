@@ -14,7 +14,7 @@ import useInternalRef from '@/hooks/useInternalRef'
 import useSetVisibleSection from '@/hooks/useSetVisibleSection'
 import { removeIndentation } from '@/utils'
 import { motion } from 'framer-motion'
-import ScrollableText from '../ScrollableText'
+import ScrollableText from '@/components/ScrollableText'
 
 const View3 = forwardRef<ViewHTMLDivElement, childViewProps>(function View3(
   { sectionIndex, scrollLock, anchor },

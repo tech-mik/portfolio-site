@@ -6,7 +6,7 @@ import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import { useScroll, useTransform } from 'framer-motion'
 import { forwardRef } from 'react'
 import { motion } from 'framer-motion'
-import ContactForm from '../ContactForm'
+import ContactForm from '@/components/ContactForm'
 
 const View7 = forwardRef<ViewHTMLDivElement, childViewProps>(function View7(
   { sectionIndex, scrollLock, anchor },
@@ -41,8 +41,8 @@ const View7 = forwardRef<ViewHTMLDivElement, childViewProps>(function View7(
       ref={ref}
       data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>
-      <h2 className='font-arima font-black text-4xl text-black lg:text-6xl'>
-        Let&apos;s grab a coffee ☕️
+      <h2 className='font-arima font-black text-4xl text-black text-center lg:text-6xl'>
+        Let’s Connect (No API Needed)
       </h2>
       <div className='border-gray-100 bg-white shadow-xl p-5 lg:p-12 border rounded-xl container'>
         <ContactForm />

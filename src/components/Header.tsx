@@ -8,14 +8,16 @@ import { motion } from 'framer-motion'
 
 const Header = () => {
   const { visibleSection } = useApp()
-  const floatingMenu = (Number(visibleSection?.dataset?.sectionId) ?? 0) > 3
+  const floatingMenuIds = [4, 6]
+  const sectionId = Number(visibleSection?.dataset?.sectionId) ?? 0
+  const floatingMenu = floatingMenuIds.includes(sectionId)
 
   const animation = {
     transition: {
       duration: 0.7,
       type: 'spring',
       bounce: 0.5,
-      delay: 0.15,
+      // delay: 0.15,
     },
   }
   return (

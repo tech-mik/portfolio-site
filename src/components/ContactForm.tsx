@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { BsFillPatchCheckFill } from 'react-icons/bs'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import FormButtons from './FormButtons'
 import {
@@ -44,7 +45,17 @@ const ContactForm = () => {
       form.reset()
       setIsSuccess(true)
     } else if (error) {
-      alert('Something went wrong')
+      if (error.type === 'RateLimitException') {
+        toast.error('Rate limit exceeded', {
+          description: 'Wait 5 minutes before sending a new email',
+        })
+      } else if (error.type === 'ValidationError') {
+        if (error instanceof z.ZodError) {
+          toast.error('Validation error', {
+            description: error.message,
+          })
+        }
+      }
     }
     setIsLoading(false)
   })
@@ -107,7 +118,7 @@ const ContactForm = () => {
               name='email'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Your inbox address? *</FormLabel>
+                  <FormLabel>Your inbox location? *</FormLabel>
                   <FormControl>
                     <Input placeholder='john.doe@acme.com' {...field} />
                   </FormControl>

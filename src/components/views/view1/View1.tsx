@@ -5,11 +5,11 @@ import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import clsx from 'clsx'
 import { forwardRef } from 'react'
 
-import { motion, useInView } from 'framer-motion'
+import { useApp } from '@/context/AppContext'
 import useInternalRef from '@/hooks/useInternalRef'
 import useSetVisibleSection from '@/hooks/useSetVisibleSection'
-import ScrollableText from '../ScrollableText'
-import { useApp } from '@/context/AppContext'
+import { motion } from 'framer-motion'
+import ScrollableText from '@/components/ScrollableText'
 
 const View1 = forwardRef<ViewHTMLDivElement, childViewProps>(function View1(
   { sectionIndex, scrollLock, anchor },

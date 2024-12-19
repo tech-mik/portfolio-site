@@ -1,18 +1,28 @@
 'use server'
 
 import { contactFormSchema } from '@/config/contactFormSchema'
-import { z } from 'zod'
+import { z, ZodError, ZodIssue } from 'zod'
 import nodemailer from 'nodemailer'
 import { headers } from 'next/headers'
 import { getIp } from '@/lib/utils'
 import { createMailRecord, getLatestMailRecordByIp } from '@/lib/db'
 import xss from 'xss'
 
-export const sendForm = async (values: z.infer<typeof contactFormSchema>) => {
+interface responseType {
+  success: boolean
+  error: null | { type: string; message: string | unknown[] }
+}
+
+export async function sendForm(
+  values: z.infer<typeof contactFormSchema>,
+): Promise<responseType> {
   try {
     const ip = await getIp(headers)
     if (!ip)
-      return { success: false, error: { message: 'No IP address found' } }
+      return {
+        success: false,
+        error: { type: 'ValidationError', message: 'No IP address found' },
+      }
 
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -69,8 +79,14 @@ export const sendForm = async (values: z.infer<typeof contactFormSchema>) => {
       }
     } else if (error instanceof Error) {
       console.log(error)
-      return { success: false, error: { message: error.message } }
+      return {
+        success: false,
+        error: { type: 'Error', message: error.message },
+      }
     }
-    return { success: false, error: true }
+    return {
+      success: false,
+      error: { type: 'UnknownError', message: 'Something went wrong' },
+    }
   }
 }

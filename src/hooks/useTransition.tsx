@@ -2,9 +2,12 @@ import { useApp } from '@/context/AppContext'
 import { ViewHTMLDivElement } from '@/types/Views'
 import { useEffect, useRef } from 'react'
 
+/**
+ * This hook is specifically responsible for transitioning between sections.
+ * It returns an object with a method that can be called to transition to a specific section.
+ */
 const useTransition = () => {
-  const { refs, visibleSection, isTransitioning, setIsTransitioning, setLog } =
-    useApp()
+  const { visibleSection, setIsTransitioning, setLog } = useApp()
   const scrollTimer = useRef<NodeJS.Timeout | null>(null)
 
   // With this effect, we set the isTransitioning to false after the view stops scrolling.
@@ -35,7 +38,6 @@ const useTransition = () => {
       const scrollBottom =
         visibleSection.scrollHeight - visibleSection.clientHeight - scrollTop
 
-      setLog(`scrollTop: ${scrollTop}, scrollBottom: ${scrollBottom}`)
       if (newSectionId > currentSectionId) {
         if (scrollBottom <= 0) {
           setIsTransitioning(true)

@@ -7,7 +7,7 @@ import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import clsx from 'clsx'
 import { motion, useInView } from 'framer-motion'
 import { forwardRef } from 'react'
-import ScrollableText from '../ScrollableText'
+import ScrollableText from '@/components/ScrollableText'
 import { useApp } from '@/context/AppContext'
 
 const View4 = forwardRef<ViewHTMLDivElement, childViewProps>(function View4(

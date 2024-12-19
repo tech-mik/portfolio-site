@@ -32,17 +32,17 @@ const View5 = forwardRef<ViewHTMLDivElement, childViewProps>(function View5(
     layoutEffect: false,
   })
 
-  useMotionValueEvent(scrollYProgress, 'change', (value: number) => {
-    if ((value >= 0.8 && visibleSection) || 0 <= sectionIndex) {
-      setIsInViewOnce(true)
-    }
-  })
-
   const backgroundColor = useTransform(
     scrollYProgress,
     [0.4, 1],
     ['#000000', '#fafafa'],
   )
+
+  useMotionValueEvent(scrollYProgress, 'change', (value: number) => {
+    if ((value >= 0.8 && visibleSection) || 0 <= sectionIndex) {
+      setIsInViewOnce(true)
+    }
+  })
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -55,7 +55,7 @@ const View5 = forwardRef<ViewHTMLDivElement, childViewProps>(function View5(
   return (
     <motion.section
       id={anchor}
-      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white py-10 lg:py-28 h-svh overflow-y-scroll'
+      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-white px-10 py-10 lg:py-28 h-svh overflow-y-scroll'
       initial={{ backgroundColor: '#FFFFFF' }}
       style={{
         backgroundColor,
@@ -66,11 +66,11 @@ const View5 = forwardRef<ViewHTMLDivElement, childViewProps>(function View5(
       ref={ref}
       data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}>
-      <h2 className='font-arima font-black text-4xl text-black lg:text-6xl'>
-        Some of my projects
+      <h2 className='font-arima font-black text-4xl text-black text-center lg:text-6xl'>
+        My Dev Adventures
       </h2>
       <motion.div
-        className='z-10 justify-center items-center gap-10 grid grid-cols-1 xl:grid-cols-[1fr,1fr] px-10 w-full container'
+        className='z-10 justify-center items-center gap-10 grid grid-cols-1 xl:grid-cols-[1fr,1fr] w-full container'
         variants={containerVariants}
         initial='hidden'
         animate={isInViewOnce ? 'visible' : 'hidden'}>

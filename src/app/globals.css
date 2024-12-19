@@ -16,7 +16,7 @@
 .green-gradient-border {
   color: black;
   position: relative;
-  display: block;
+  display: inline-block;
   padding-bottom: 10px;
   padding-right: 10px;
 

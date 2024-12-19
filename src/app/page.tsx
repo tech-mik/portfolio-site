@@ -3,26 +3,29 @@
 import { VIEWS_CONFIG } from '@/config/viewsConfig'
 import { useApp } from '@/context/AppContext'
 import useScrollController from '@/hooks/useScrollController'
+import { Toaster } from 'sonner'
 
 const Page = () => {
+  useScrollController()
   const { refs } = useApp()
 
-  useScrollController()
-
   return (
-    <div className='relative bg-black'>
-      {VIEWS_CONFIG.map(({ element: View }, i) => {
-        return (
-          <View
-            key={i}
-            sectionIndex={i}
-            ref={refs.current[i]}
-            scrollLock={VIEWS_CONFIG[i].scrollLock}
-            anchor={VIEWS_CONFIG[i].anchor}
-          />
-        )
-      })}
-    </div>
+    <>
+      <Toaster />
+      <div className='relative bg-black'>
+        {VIEWS_CONFIG.map(({ element: View }, i) => {
+          return (
+            <View
+              key={i}
+              sectionIndex={i}
+              ref={refs.current[i]}
+              scrollLock={VIEWS_CONFIG[i].scrollLock}
+              anchor={VIEWS_CONFIG[i].anchor}
+            />
+          )
+        })}
+      </div>
+    </>
   )
 }
 

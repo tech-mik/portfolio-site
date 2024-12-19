@@ -1,3 +1,4 @@
+import BrowserMockup from '@/components/BrowserMockup'
 import ProjectTypeBadge from '@/components/ProjectTypeBadge'
 import {
   Tooltip,
@@ -75,12 +76,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         </div>
       </Link>
       <div className='relative w-1/5 sm:w-2/5 h-full'>
-        <div className='top-10 absolute flex flex-col shadow-xl border rounded-lg w-[110%] h-full overflow-hidden'>
-          <div className='flex flex-row justify-start items-center gap-1 border-gray-150 bg-gray-100 px-2 border-b h-6'>
-            <div className='bg-red-500 rounded-full w-2 h-2'></div>
-            <div className='bg-yellow-500 rounded-full w-2 h-2'></div>
-            <div className='bg-green-500 rounded-full w-2 h-2'></div>
-          </div>
+        <BrowserMockup className='top-10 absolute w-[110%]'>
           <Image
             className='object-left-top mt-6 object-cover'
             quality={100}
@@ -88,7 +84,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             alt='todo-bird'
             fill
           />
-        </div>
+        </BrowserMockup>
       </div>
     </motion.article>
   )
