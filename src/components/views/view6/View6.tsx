@@ -70,15 +70,16 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
       }}>
-      <h1 className='flex md:flex-row flex-col font-arima font-bold text-4xl text-center text-white sm:text-5xl lg:text-7xl'>
-        <span>My Toolkit for </span>
+      <h2 className='flex md:flex-row flex-col font-arima font-bold text-4xl text-center text-white sm:text-5xl lg:text-7xl'>
+        <span>My Toolkit for</span>
         <span>
-          Tech{' '}
+          {' '}
+          Tech
           <span className='green-gradient-border animated' data-text='Wizardry'>
             Wizardry
           </span>
         </span>
-      </h1>
+      </h2>
       <div className='flex lg:flex-row flex-col justify-start items-center gap-10 max-w-screen-lg container'>
         <BrowserMockup
           onClick={handleFocus}

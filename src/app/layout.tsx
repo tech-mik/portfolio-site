@@ -6,6 +6,7 @@ import Developer from '@/components/Developer'
 import Header from '@/components/Header'
 import AppContextProvider from '@/context/AppContext'
 import { Arima, Dancing_Script, Londrina_Solid, VT323 } from 'next/font/google'
+import ScrollIndicator from '@/components/ScrollIndicator'
 
 const dancingscript = Dancing_Script({
   subsets: ['latin'],
@@ -62,6 +63,7 @@ export default function RootLayout({
             {process.env.DEVELOPER_BLOCK === 'true' && <Developer />}
             <Header />
             <main className='w-full min-h-lvh'>{children}</main>
+            <ScrollIndicator />
           </body>
         </AppContextProvider>
       </html>

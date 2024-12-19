@@ -10,6 +10,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      transitionDelay: {
+        '1500': '1500ms',
+      },
       keyframes: {
         blink: {
           '0%, 100%': { opacity: '1' },
