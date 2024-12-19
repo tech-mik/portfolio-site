@@ -16,6 +16,6 @@ export const VIEWS_CONFIG: ViewConfig[] = [
   { element: Views.View3, scrollLock: true, anchor: 'view3' },
   { element: Views.View4, scrollLock: true, anchor: 'view4' },
   { element: Views.View5, scrollLock: false, anchor: 'projects' },
-  { element: Views.View6, scrollLock: true, anchor: 'skills' },
+  { element: Views.View6, scrollLock: false, anchor: 'skills' },
   { element: Views.View7, scrollLock: false, anchor: 'contact' },
 ]

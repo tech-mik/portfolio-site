@@ -63,6 +63,7 @@ const TerminalAction = ({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
+      <button type='submit' className='hidden' />
     </form>
   )
 }
