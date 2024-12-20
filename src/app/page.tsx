@@ -11,7 +11,7 @@ const Page = () => {
 
   return (
     <>
-      <Toaster />
+      <Toaster duration={10000} closeButton pauseWhenPageIsHidden />
       <div className='relative bg-black'>
         {VIEWS_CONFIG.map(({ element: View }, i) => {
           return (
