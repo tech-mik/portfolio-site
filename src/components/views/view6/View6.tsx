@@ -21,7 +21,7 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
 ) {
   const { internalRef } = useInternalRef(ref)
   useSetVisibleSection(internalRef, sectionIndex)
-  const { visibleSection } = useApp()
+  const { visibleSection, isScrolling, isTransitioning } = useApp()
 
   const [frontendTyping, setFrontendTyping] = useState(false)
   const frontendRef = useRef<HTMLInputElement>(null)
@@ -42,20 +42,29 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
   )
 
   const handleFocus = useCallback(() => {
-    if (sectionIndex === Number(visibleSection?.dataset.sectionId)) {
+    if (
+      sectionIndex === Number(visibleSection?.dataset.sectionId) &&
+      !isScrolling &&
+      !isTransitioning
+    ) {
       if (!frontendTyping) {
         frontendRef?.current?.focus()
       } else if (!backendTyping) {
         backendRef?.current?.focus()
       }
     }
-  }, [frontendTyping, backendTyping, sectionIndex, visibleSection])
+  }, [
+    frontendTyping,
+    backendTyping,
+    sectionIndex,
+    visibleSection,
+    isScrolling,
+    isTransitioning,
+  ])
 
   useEffect(() => {
-    if (sectionIndex === Number(visibleSection?.dataset.sectionId)) {
-      handleFocus()
-    }
-  }, [visibleSection, handleFocus, sectionIndex])
+    handleFocus()
+  }, [handleFocus])
 
   return (
     <motion.section
