@@ -53,6 +53,14 @@ export const metadata: Metadata = {
     type: 'website',
     images: ['/og-image.webp'],
   },
+  twitter: {
+    site: 'http://10holt.dev',
+    card: 'summary_large_image',
+    title: "10holt.dev - Let's build together",
+    description:
+      'A showcase of my skills, projects, and experience as a software developer.',
+    images: '/og-image.webp',
+  },
 }
 
 export const viewport: Viewport = {
