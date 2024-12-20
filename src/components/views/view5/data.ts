@@ -42,6 +42,10 @@ export const projects: Project[] = [
       { title: 'React', icon: SiReact },
       { title: 'Tailwind CSS', icon: SiTailwindcss },
       { title: 'Framer Motion', icon: SiFramer },
+      { title: 'Zod', icon: SiZod },
+      { title: 'Resend', icon: SiResend },
+      { title: 'Postgress', icon: SiPostgresql },
+      { title: 'DrizzleORM', icon: SiDrizzle },
     ],
   },
   {

@@ -15,10 +15,9 @@ const color = {
   6: 'text-black',
 }
 
-const ScrollIndicator = () => {
-  const eventController = new AbortController()
-  const { signal } = eventController
+const INDICATOR_DELAY = 1000
 
+const ScrollIndicator = () => {
   const { visibleSection, refs } = useApp()
   const sectionIndex = Number(
     visibleSection?.dataset.sectionId,
@@ -32,16 +31,19 @@ const ScrollIndicator = () => {
 
     timerRef.current = setTimeout(() => {
       setShowIndicator(true)
-    }, 3000)
+    }, INDICATOR_DELAY)
   }, [])
 
   useEffect(() => {
+    const eventController = new AbortController()
+    const { signal } = eventController
+
     const eventHandler = () => {
       if (timerRef.current) clearTimeout(timerRef.current)
 
       timerRef.current = setTimeout(() => {
         setShowIndicator(true)
-      }, 3000)
+      }, INDICATOR_DELAY)
 
       setShowIndicator(false)
     }

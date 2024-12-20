@@ -7,7 +7,7 @@ import useInternalRef from '@/hooks/useInternalRef'
 import useSetVisibleSection from '@/hooks/useSetVisibleSection'
 import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { forwardRef, useEffect, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import ProgressBar from './ProgressBar'
 import TerminalAction from './TerminalAction'
 import Caret from '@/components/Caret'
@@ -41,7 +41,7 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
     ['#fafafa', '#000000'],
   )
 
-  const handleFocus = () => {
+  const handleFocus = useCallback(() => {
     if (sectionIndex === Number(visibleSection?.dataset.sectionId)) {
       if (!frontendTyping) {
         frontendRef?.current?.focus()
@@ -49,13 +49,13 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
         backendRef?.current?.focus()
       }
     }
-  }
+  }, [frontendTyping, backendTyping, sectionIndex, visibleSection])
 
   useEffect(() => {
     if (sectionIndex === Number(visibleSection?.dataset.sectionId)) {
       handleFocus()
     }
-  }, [visibleSection])
+  }, [visibleSection, handleFocus, sectionIndex])
 
   return (
     <motion.section
@@ -70,11 +70,10 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
       }}>
-      <h2 className='flex md:flex-row flex-col font-arima font-bold text-4xl text-center text-white sm:text-5xl lg:text-7xl'>
+      <h2 className='flex md:flex-row flex-col flex-wrap justify-center font-arima font-bold text-4xl text-center text-white sm:text-5xl lg:text-7xl'>
         <span>My Toolkit for</span>
-        <span>
-          {' '}
-          Tech
+        <span className='md:ml-2'>
+          Tech{' '}
           <span className='green-gradient-border animated' data-text='Wizardry'>
             Wizardry
           </span>
