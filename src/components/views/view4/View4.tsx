@@ -58,7 +58,7 @@ const View4 = forwardRef<ViewHTMLDivElement, childViewProps>(function View4(
               delay: isInView ? 0.5 : 0,
             }}
             className='font-bold text-white'>
-            Work
+            Build
           </motion.span>
           <motion.span
             data-text='together'

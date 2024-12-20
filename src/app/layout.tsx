@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     { rel: 'apple-touch-icon', sizes: '180x180', url: '/apple-touch-icon.png' },
     { rel: 'manifest', url: '/site.webmanifest' },
   ],
-  title: "10holt.dev - Let's work together",
+  title: "10holt.dev - Let's build together",
   description:
     'A showcase of my skills, projects, and experience as a software developer. Explore my portfolio to see the work I have done and learn more about my skills and experiences.',
   creator: 'Mik ten Holt',
