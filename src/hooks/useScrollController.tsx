@@ -105,12 +105,14 @@ const useScrollerController = () => {
       if (Math.abs(differenceY) > Math.abs(differenceX)) {
         const visibleSectionId = Number(visibleSection?.dataset.sectionId)
         if (differenceY > 0 && visibleSectionId > 0) {
+          // Swiping DOWN (prev view)
           const newSection = refs.current[visibleSectionId - 1].current
           transitionTo(newSection)
         } else if (
           differenceY < 0 &&
           visibleSectionId < refs.current.length - 1
         ) {
+          // Swiping UP (next view)
           const newSection = refs.current[visibleSectionId + 1].current
           transitionTo(newSection)
         }

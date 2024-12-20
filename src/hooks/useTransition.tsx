@@ -1,6 +1,7 @@
 import { useApp } from '@/context/AppContext'
 import { ViewHTMLDivElement } from '@/types/Views'
 import { useEffect, useRef } from 'react'
+import scrollIntoView from 'scroll-into-view-if-needed'
 
 /**
  * This hook is specifically responsible for transitioning between sections.
@@ -37,27 +38,33 @@ const useTransition = () => {
       const scrollTop = visibleSection.scrollTop
       const scrollBottom =
         visibleSection.scrollHeight - visibleSection.clientHeight - scrollTop
+      setLog(`${scrollBottom}, ${scrollTop}`)
 
       if (newSectionId > currentSectionId) {
-        if (scrollBottom <= 0) {
+        // scrolling down
+        if (scrollBottom <= 2) {
           setIsTransitioning(true)
-          section.scrollIntoView({
+          scrollIntoView(section, {
             behavior: 'smooth',
+            scrollMode: 'if-needed',
           })
         }
       } else if (newSectionId < currentSectionId) {
         // Scrolling up
-        if (scrollTop <= 0) {
+
+        if (scrollTop <= 2) {
           setIsTransitioning(true)
-          section.scrollIntoView({
+          scrollIntoView(section, {
             behavior: 'smooth',
+            scrollMode: 'if-needed',
           })
         }
       }
     } else {
       setIsTransitioning(true)
-      section.scrollIntoView({
+      scrollIntoView(section, {
         behavior: 'smooth',
+        scrollMode: 'if-needed',
       })
     }
   }

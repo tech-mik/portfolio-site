@@ -69,7 +69,7 @@ const View6 = forwardRef<ViewHTMLDivElement, childViewProps>(function View6(
   return (
     <motion.section
       id={anchor}
-      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-black px-5 py-10 lg:py-28 h-svh'
+      className='relative z-20 flex flex-col justify-start items-center gap-10 bg-black px-5 py-10 lg:py-28 h-screen'
       ref={ref}
       data-section-id={sectionIndex}
       data-scroll-lock={scrollLock}
