@@ -4,9 +4,9 @@ import './globals.css'
 
 import Developer from '@/components/Developer'
 import Header from '@/components/Header'
+import ScrollIndicator from '@/components/ScrollIndicator'
 import AppContextProvider from '@/context/AppContext'
 import { Arima, Dancing_Script, Londrina_Solid, VT323 } from 'next/font/google'
-import ScrollIndicator from '@/components/ScrollIndicator'
 
 const dancingscript = Dancing_Script({
   subsets: ['latin'],
@@ -33,10 +33,26 @@ const vt323 = VT323({
 })
 
 export const metadata: Metadata = {
+  icons: [
+    {
+      url: '/favicon-96x96.png',
+      type: 'image/png',
+      sizes: '96x96',
+    },
+    { type: 'image/svg+xml', url: '/favicon.svg' },
+    { rel: 'shortcut icon', url: '/favicon.ico' },
+    { rel: 'apple-touch-icon', sizes: '180x180', url: '/apple-touch-icon.png' },
+    { rel: 'manifest', url: '/site.webmanifest' },
+  ],
   title: "10holt.dev - Let's work together",
   description:
     'A showcase of my skills, projects, and experience as a software developer. Explore my portfolio to see the work I have done and learn more about my skills and experiences.',
   creator: 'Mik ten Holt',
+  openGraph: {
+    url: 'https://10holt.dev',
+    type: 'website',
+    images: ['/og-image.webp'],
+  },
 }
 
 export const viewport: Viewport = {
