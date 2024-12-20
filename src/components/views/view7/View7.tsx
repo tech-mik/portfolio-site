@@ -1,12 +1,11 @@
 'use client'
 
+import ContactForm from '@/components/ContactForm'
 import useInternalRef from '@/hooks/useInternalRef'
 import useSetVisibleSection from '@/hooks/useSetVisibleSection'
 import { childViewProps, ViewHTMLDivElement } from '@/types/Views'
-import { useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { forwardRef } from 'react'
-import { motion } from 'framer-motion'
-import ContactForm from '@/components/ContactForm'
 
 const View7 = forwardRef<ViewHTMLDivElement, childViewProps>(function View7(
   { sectionIndex, scrollLock, anchor },

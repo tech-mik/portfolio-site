@@ -1,12 +1,15 @@
 'use server'
 
 import { contactFormSchema } from '@/config/contactFormSchema'
-import { z, ZodError, ZodIssue } from 'zod'
-import nodemailer from 'nodemailer'
-import { headers } from 'next/headers'
-import { getIp } from '@/lib/utils'
 import { createMailRecord, getLatestMailRecordByIp } from '@/lib/db'
+import { getIp } from '@/lib/utils'
+import { headers } from 'next/headers'
 import xss from 'xss'
+import { z } from 'zod'
+
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface responseType {
   success: boolean
@@ -23,18 +26,6 @@ export async function sendForm(
         success: false,
         error: { type: 'ValidationError', message: 'No IP address found' },
       }
-
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-      debug: true,
-      logger: true,
-    })
 
     // First validate form data
     contactFormSchema.parse(values)
@@ -62,15 +53,33 @@ export async function sendForm(
     await createMailRecord(ip)
 
     // Send the email
-    await transporter.sendMail({
-      to: 'miktenholt@gmail.com',
-      subject: 'New message from your website!',
-      html: `Name: ${xss(values.name)}<br>Email: ${xss(
-        values.email,
-      )}<br>Organization: ${xss(values.organization)}<br>Message: ${xss(
-        values.message,
-      )}`,
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: '10Holt.dev <noreply@backstr.app>',
+        reply_to: values.email,
+        to: ['miktenholt@gmail.com'],
+        subject: 'New message from your website',
+        html: `Name: ${xss(values.name)}<br>Email: ${xss(
+          values.email,
+        )}<br>Organization: ${xss(values.organization)}<br>Message: ${xss(
+          values.message,
+        )}`,
+      }),
     })
+
+    if (!res.ok) {
+      const data = await res.json()
+      const error = {
+        type: 'ResendError',
+        message: data,
+      }
+      throw new Error(JSON.stringify(error))
+    }
 
     return { success: true, error: null }
   } catch (error: unknown) {
@@ -81,14 +90,16 @@ export async function sendForm(
       }
     } else if (error instanceof Error) {
       console.log(error)
+
       return {
         success: false,
         error: { type: 'Error', message: error.message },
       }
-    }
-    return {
-      success: false,
-      error: { type: 'UnknownError', message: 'Something went wrong' },
+    } else {
+      return {
+        success: false,
+        error: { type: 'UnknownError', message: 'Something went wrong' },
+      }
     }
   }
 }
