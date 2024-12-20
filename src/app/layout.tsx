@@ -33,9 +33,10 @@ const vt323 = VT323({
 })
 
 export const metadata: Metadata = {
-  title: 'Mik ten Holt - Portfolio',
+  title: "10holt.dev - Let's work together",
   description:
-    'A showcase of my skills, projects, and experience as a software developer. Explore my portfolio to see the work I&apos;ve done and learn more about my skill se and experiences.',
+    'A showcase of my skills, projects, and experience as a software developer. Explore my portfolio to see the work I have done and learn more about my skills and experiences.',
+  creator: 'Mik ten Holt',
 }
 
 export const viewport: Viewport = {

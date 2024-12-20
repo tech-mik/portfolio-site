@@ -55,6 +55,11 @@ const ContactForm = () => {
             description: error.message,
           })
         }
+      } else {
+        toast.error('Error', {
+          description:
+            'An error occurred while sending the email, please try again',
+        })
       }
     }
     setIsLoading(false)
@@ -147,7 +152,7 @@ const ContactForm = () => {
                   <FormLabel>What is on your mind? *</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder='How do you drink your coffee? Because I am a cappuccino guy, no sugar.'
+                      placeholder='How do you drink your coffee? I am a cappuccino guy, no sugar.'
                       {...field}
                       className='lg:h-full'
                     />

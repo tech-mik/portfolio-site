@@ -32,6 +32,8 @@ export async function sendForm(
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      debug: true,
+      logger: true,
     })
 
     // First validate form data
