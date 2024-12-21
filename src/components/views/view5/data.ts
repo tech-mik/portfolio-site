@@ -142,7 +142,7 @@ export const projects: Project[] = [
   {
     title: 'Auth.js Course',
     github: 'https://github.com/tech-mik/next-auth',
-    URL: 'https://next-auth-zeta-one.vercel.app/',
+    URL: 'https://next-auth-zeta-one.vercel.app/auth/login?testing=true',
     description:
       'A course project from Code With Antonio, showcasing how to build an authentication system with Next-Auth / Auth.js.',
     image: nextAuth,
