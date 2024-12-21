@@ -40,20 +40,17 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       <Link
         href={project.URL}
         target='_blank'
-        className='flex flex-col justify-between items-start gap-5 p-5 sm:p-10 w-4/5 sm:w-3/5'>
+        className='flex flex-col justify-between items-start gap-5 p-5 sm:p-10 w-4/5 md:w-3/5'>
         <div className='space-y-3'>
           <div className='justify-start items-center gap-2'>
             <div className='flex flex-row items-start gap-3'>
-              <h3 className='font-arima font-extrabold text-2xl'>
-                {project.title}
-              </h3>
               <TooltipProvider delayDuration={100}>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link
                       href={project.github}
                       target='_blank'
-                      className='bg-white shadow-sm mb-1 p-1 border rounded-full'>
+                      className='bg-white shadow-sm mb-1 p-1 border rounded-full text-lg'>
                       <SiGithub />
                     </Link>
                   </TooltipTrigger>
@@ -62,6 +59,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+              <h3 className='font-arima font-extrabold text-xl md:text-2xl'>
+                {project.title}
+              </h3>
             </div>
             <ProjectTypeBadge projectType={project.type} />
           </div>
@@ -75,7 +75,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </TooltipProvider>
         </div>
       </Link>
-      <div className='relative w-1/5 sm:w-2/5 h-full'>
+      <div className='relative w-1/5 md:w-2/5 h-full'>
         <BrowserMockup className='top-10 absolute w-[110%]'>
           <Image
             className='object-left-top mt-6 object-cover'

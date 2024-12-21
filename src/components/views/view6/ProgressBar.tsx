@@ -24,7 +24,7 @@ const ProgressBar = ({
 }: ProgressBarProps) => {
   return (
     <div>
-      <span className='inline-block w-20 lg:w-32'>{label}:</span>
+      <span className='inline-block w-16 sm:w-32'>{label}:</span>
       <span>
         <span>[</span>
         <span className='text-green-300'>
