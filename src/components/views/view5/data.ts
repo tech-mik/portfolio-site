@@ -68,7 +68,7 @@ export const projects: Project[] = [
   {
     title: 'Todo Bird',
     github: 'https://github.com/tech-mik/TODO_BIRD',
-    URL: 'https://todo-bird.vercel.app',
+    URL: 'https://todo-bird.vercel.app/auth/signin?testing=true',
     description:
       'A simple todo app with a twist. A bird that helps you keep track of your tasks.',
     image: projectTodoBird,
@@ -105,7 +105,7 @@ export const projects: Project[] = [
   {
     title: 'The Wild Oasis Dashboard',
     github: 'https://github.com/tech-mik/the-wild-oasis',
-    URL: 'https://the-wild-oasis-three-eta.vercel.app',
+    URL: 'https://the-wild-oasis-three-eta.vercel.app/login?testing=true',
 
     description:
       'A dashboard for the resort owners to manage the bookings and the resort.',
