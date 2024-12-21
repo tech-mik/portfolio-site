@@ -51,7 +51,7 @@ export const projects: Project[] = [
   {
     title: 'Next.js ACME Dashboard',
     github: 'https://github.com/tech-mik/nextjs-acme-dashboard',
-    URL: 'https://nextjs-acme-dashboard-mu.vercel.app',
+    URL: 'https://nextjs-acme-dashboard-mu.vercel.app/login?testing=true',
     description:
       'An official tutorial from Next.js, showcasing a comprehensive dashboard built with Next.js.',
     image: nextjsAcme,
