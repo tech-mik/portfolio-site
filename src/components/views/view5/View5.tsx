@@ -55,7 +55,7 @@ const View5 = forwardRef<ViewHTMLDivElement, childViewProps>(function View5(
   return (
     <motion.section
       id={anchor}
-      className='relative z-20 flex flex-col justify-start items-center gap-5 md:gap-10 bg-white px-5 sm:px-10 py-10 lg:py-28 h-dvh overflow-y-scroll'
+      className='relative z-20 flex flex-col justify-start items-center gap-5 md:gap-10 bg-white px-5 sm:px-10 py-10 lg:py-32 h-dvh overflow-y-scroll'
       initial={{ backgroundColor: '#FFFFFF' }}
       style={{
         backgroundColor,
