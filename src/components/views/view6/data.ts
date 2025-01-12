@@ -1,6 +1,6 @@
 export const frontend = {
-  'Javascript': 75,
-  'TypeScript': 65,
+  'Javascript': 80,
+  'TypeScript': 60,
   'HTML': 90,
   'CSS': 80,
   'React': 75,
